@@ -1,0 +1,130 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    margin: 0;
+    background-color: #BBC1C6;
+}
+.sidebar {
+    width: 250px;
+    background-color: #343a40;
+    color: #fff;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(71, 71, 71, 0.1);
+    position: fixed;
+    height: 100%;
+    overflow-y: auto;
+}
+.sidebar h2 {
+    color:  #ebeef0;
+    margin-bottom: 20px;
+}
+.sidebar p {
+    margin: 5px 0;
+    font-size: 12px;
+    color: #adb5bd;
+}
+.sidebar a {
+    display: block;
+    color: #adb5bd;
+    text-decoration: none;
+    margin: 10px 0;
+    font-size: 14px;
+}
+.sidebar a:hover {
+    color: #4b6387;
+}
+.content {
+    margin-left: 300px; /* Increased the margin-left to create more space */
+    padding: 40px 20px;
+    flex: 1;
+    background-color: #fff;
+}
+.content code {
+    background-color: #BBC1C6;
+    font-size: 14PX;
+}
+.content h1 {
+    color: #2c3237;
+    margin-bottom: 20px;
+}
+.content h2 {
+    color: #4b6387;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+.content h3 {
+    color: #424c57;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.code-block, .response {
+    background-color: #272822;
+    color: #f8f8f2;
+    padding: 12px;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+    overflow-x: auto;
+    margin-top: 12px;
+    flex: 1;
+    display: inline-block;
+    height: 250px; /* Ensure the height adjusts according to content */
+    max-width: 600px; /* Limit the maximum width */
+}
+.response {
+    background-color: #f9f9f9;
+    color: #343a40;
+    border: 1px solid #ddd;
+    margin-right: 0;
+    max-width: 600px; /* Limit the maximum width */
+}
+.code-block pre, .response pre {
+    margin: 0;
+}
+.table {
+    width: 39%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+.table th {
+    background-color: #f2f2f2;
+}
+.content p {
+    color: #343a40;
+    line-height: 1.6;
+    margin: 10px 0;
+}
+.content a {
+    color: #4b6387;
+    text-decoration: none;
+    font-weight: bold;
+}
+.content a:hover {
+    text-decoration: underline;
+}
+.flex-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+/* New styles for the query parameters table */
+.query-params-table {
+    width: 68%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+.query-params-table th, .query-params-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+.query-params-table th {
+    background-color: #f2f2f2;
+}
+.query-params-table td {
+    background-color: #fafafa;
+}
