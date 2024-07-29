@@ -1,0 +1,2639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garnishment API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            margin: 0;
+            background-color: #BBC1C6;
+            
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #343a40;
+            color: #fff;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(71, 71, 71, 0.1);
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
+        }
+        .sidebar h2 {
+            color:  #ebeef0;
+            margin-bottom: 20px;
+        }
+        .sidebar p {
+            margin: 5px 0;
+            font-size: 12px;
+            color: #adb5bd;
+        }
+        .sidebar a {
+            display: block;
+            color: #adb5bd;
+            text-decoration: none;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        .sidebar a:hover {
+            color: #4b6387;
+        }
+        .content {
+            margin-left: 300px; /* Increased the margin-left to create more space */
+            padding: 40px 20px;
+            flex: 1;
+            background-color: #fff;
+        }
+        .content code{
+            background-color: #BBC1C6;
+            font-size: 14PX;
+        }
+        .content h1 {
+            color: #2c3237;
+            margin-bottom: 20px;
+        }
+        .content h2 {
+            color: #4b6387;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        .content h3 {
+            color: #424c57;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .code-block, .response {
+        background-color: #272822;
+        color: #f8f8f2;
+        padding: 12px;
+        border-radius: 4px;
+        font-family: 'Courier New', Courier, monospace;
+        overflow-x: auto;
+        margin-top: 12px;
+        flex: 1;
+        display: inline-block;
+        height: 250px; /* Ensure the height adjusts according to content */
+     /* Remove right margin */
+        max-width: 600px; /* Limit the maximum width */
+    }
+    .response {
+        background-color: #f9f9f9;
+        color: #343a40;
+        border: 1px solid #ddd;
+        margin-right: 0;
+        max-width: 600px; /* Limit the maximum width */
+    }
+    .code-block pre, .response pre {
+        margin: 0;
+    }
+        .table {
+            width: 39%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .table th, .table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .table th {
+            background-color: #f2f2f2;
+        }
+
+        .content p {
+            color: #343a40;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .content a {
+            color: #4b6387;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .content a:hover {
+            text-decoration: underline;
+        }
+        .flex-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        /* New styles for the query parameters table */
+        .query-params-table {
+            width: 68%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .query-params-table th, .query-params-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .query-params-table th {
+            background-color: #f2f2f2;
+        }
+        .query-params-table td {
+            background-color: #fafafa;
+        }
+        
+    </style>
+    
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Garnishment API</h2>
+        <br>
+        <p>Version: 1.0</p>
+        <p>Last Updated: 28th July, 2024</p>
+        <br>
+        <a href="#Register-Employer">REGISTER EMPLOYER</a>
+        <a href="#Login-Employer">LOGIN EMPLOYER</a>
+        <a href="#Password Reset">PASSWORD RESET</a>
+        <a href="#Forget Password Confirm">FORGOT PASSWORD CONFIRM</a>
+        <a href="#Employee Deatils">EMPLOYEE DETAILS</a>
+        <a href="#Tax Details">TAX DETAILS</a>
+        <a href="#Department Details">DEPARTMENT DETAILS</a>
+        <a href="#Location Details">LOCATION DETAILS</a>
+        <a href="#IWO Details">IWO DETAILS</a>
+        <a href="#IWO PDF upload">IWO PDF UPLOAD</a>
+        <a href="#Import Employee Details">IMPORT EMPLOYEE DETAILS </a>
+        <a href="#DashBoard Data">DASHBORAD DATA</a>
+        <a href="#Get Location Details">GET LOCATION DETAILS</a>
+        <a href="#Get Department Details">GET DEPARTMENT DETAILS</a>
+        <a href="#Get Tax Details">GET TAX DETAILS</a>
+        <a href="#Get All Emplloyee Details">GET ALL EMPLOYEE DETAILS</a>
+        <a href="#Get All Departments">GET ALL DEPARTMENTS </a>
+        <a href="#Get All Taxs">GET ALL TAXS </a>
+        <a href="#Get All locations">GET ALL LOCATIONS</a>
+        <a href="#Get Single Employee">GET SINGLE EMPLOYEE</a>
+        <a href="#Get Single Department">GET SINGLE DEPARTMENT</a>
+        <a href="#Get Single Location">GET SINGLE LOCATION</a>
+        <a href="#Get Single Tax">GET SINGLE TAX</a>
+        <a href="#Export Employee Data CSV File">EXPORT EMPLOYEE Data CSV FILE</a>
+        <a href="#Garnishment Calculation Result">GARNISHMENT CALCULATION RESULT</a>
+        <a href="#Get ALL Garnishment Calculation Result">GET ALL GARNISHMENT CALCULATION RESULT</a>
+        <a href="#GET 5 Recent Log Data">GET 5 RECENT LOG DATA</a>
+        <a href="#Update Employer Details">UPDATE EMPLOYER DETAILS</a>
+        <a href="#Update Employee Details">UPDATE EMPLOYEE DETAILS</a>
+        <a href="#Update Tax Details">UPDATE TAX DETAILS</a>
+        <a href="#Update Department Details">UPDATE DEPARTMENT DETAILS</a>
+        <a href="#Update Location Details">UPDATE LOCATION DETAILS</a>
+        <a href="#Delete Employee Details">DELETE EMPLOYEE DETAILS</a>
+        <a href="#Update Tax Details">DELETE TAX DETAILS</a>
+        <a href="#Update Department Details">DELETE DEPARTMENT DETAILS</a>
+        <a href="#Update Location Details">DELETE LOCATION DETAILS</a>
+
+    </div>
+    <div class="content">
+    <section id="POST">
+        <section id="get-started">
+            <h1>GET STARTED</h1>
+            <p>The Garnishment API provides programmatic access to read data. Retrieve Users, filter them, etc.</p>
+            <p>To use this API, you need a <strong>User Access</strong>. Please contact us at <a href="mailto:Sourabh.kosti@orangedatechtech.com">Sourabh.kosti@orangedatechtech.com</a> to get your user details.</p>
+            <p>We have built REST APIs using Django for use in Web Applications.</p>
+        </section>
+        <section id="Register-Employer">
+            <h2>Register Employer</h2>
+            <p>This is a <strong>POST API</strong> for registering an employer with the following fields:</p>
+            <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/register</code></p>
+            <h3>QUERY PARAMETERS</h3>
+            <table class="query-params-table">
+
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Name</td>
+                            <td>Employer Name to be stored.</td>
+                        </tr>
+                        <tr>
+                            <td>Username</td>
+                            <td>Username to uniquely identify the employer.</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>Email address of the employer.</td>
+                        </tr>
+                        <tr>
+                            <td>Password1</td>
+                            <td>Password for securing the details.</td>
+                        </tr>
+                        <tr>
+                            <td>Password2</td>
+                            <td>Confirmation password for security.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            <div class="flex-row">
+                <div class="code-block">
+                    <h3>Example CURL Command</h3>
+                    <pre>
+-request POST 'https://garnishment-backend.onrender.com/User/register' \
+--form 'name="Ramesh yadav"' \
+--form 'username="Ramesh111"' \
+--form 'email="Ramesh@gmail.com"' \
+--form 'password1="Test@12345"' \
+--form 'password2="Test@12345"'
+                    </pre>
+                </div>
+                <div class="response">
+                    <h3>Response</h3>
+                    <pre>
+{
+    "message": "Successfully registered",
+    "status code": 201
+}
+                    </pre>
+                </div>
+            </div>
+        </section>
+        <section id="Login-Employer">
+            <h2>Login Employer</h2>
+            <p>This is a <strong>POST API</strong> for Login an employer with the following fields:</p>
+            <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/login</code></p>
+            <h3>QUERY PARAMETERS</h3>
+            <table class="query-params-table">
+
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Email</td>
+                            <td>Email address of the employer.</td>
+                        </tr>
+                        <tr>
+                            <td>Password</td>
+                            <td>Password for securing the details.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            <div class="flex-row">
+                <div class="code-block">
+                    <h3>Example CURL Command</h3>
+                    <pre>
+--request POST 'https://garnishment-backend.onrender.com/User/register' \
+--form 'email="Ramesh@gmail.com"'\
+--form 'password="Test@12345"' \
+
+                    </pre>
+                </div>
+                <div class="response">
+                    <h3>Response</h3>
+                    <pre>
+{
+    "success": true,
+    "message": "Login successfully",
+    "user_data": {
+        "employer_id": 9,
+        "username": "Ramesh1",
+        "name": "Ramesh yadav",
+        "email": "Ramesh1@gmail.com"
+    },
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyMjkyNTgxMCwiaWF0IjoxNzIyMDYxODEwLCJqdGkiOiIwYWY0OTljNGI4YzA0M2NkOTczMGY4MWY3YTA3MGNiYyIsInVzZXJfaWQiOjl9.zuxlUUUjQjsNKgiVzWS0EKQNIYfylnw0-WSJD1gl6xY",
+    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIyMDYyMTEwLCJpYXQiOjE3MjIwNjE4MTAsImp0aSI6IjUzNjg4Y2FjMmM1MjQ1NGQ5MjgwYTVhOGY4NTFmMjExIiwidXNlcl9pZCI6OX0.RUSVG9wIEAJxE8Vr-iDTlzywn9lRhSDyTqTaJqU-6X4",
+    "expire_time": 1722062110,
+    "status code": 200
+}
+                    </pre>
+                </div>
+            </div>
+        </section>
+        <section id="Password Reset">
+            <h2>Password Reset</h2>
+            <p>This is a <strong>POST API</strong> for Password Reset an employer with the following fields:</p>
+            <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/password-reset</code></p>
+            <h3>QUERY PARAMETERS</h3>
+            <table class="query-params-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr>    
+                        <td>Email</td>
+                        <td>Email address of the employer.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            <div class="flex-row">
+                <div class="code-block">
+                    <h3>Example CURL Command</h3>
+                    <pre>
+--request POST 'https://garnishment-backend.onrender.com/User/password-reset' \
+--form 'email="ritik@gmail.com"'\
+                 </pre>
+                </div>
+                <div class="response">
+                    <h3>Response</h3>
+                    <pre>
+{
+    "message": "Password reset link sent.",
+    "status code": 200
+}
+                    </pre>
+                </div>
+            </div>
+        </section>
+        <section id="Forget Password Confirm">
+            <h2>Forget Password Confirm</h2>
+            <p>This is a <strong>POST API</strong> for Login an employer with the following fields:</p>
+            <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/password-reset-confirm/:token/</code></p>
+            <h3>QUERY PARAMETERS</h3>
+            <table class="query-params-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Password</td>
+                            <td>Password for securing the details.</td>
+                        </tr>
+                        <tr>
+                            <td>confirm_password</td>
+                            <td>Confirmation password for security.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            <div class="flex-row">
+                <div class="code-block">
+                    <h3>Example CURL Command</h3>
+                    <pre>
+--request POST 'https://garnishment-backend.onrender.com/User/password-reset-confirm/:token' \
+--form 'password="newpassword1234"'\
+--form 'confirm_password="newpassword1234"'\
+                    </pre>
+                </div>
+                <div class="response">
+                    <h3>Response</h3>
+                    <pre>
+{
+    "password": "newpassword1234",
+    "confirm_password": "newpassword1234"
+}
+                        
+                    </pre>
+                </div>
+            </div>
+        </section>
+        <section id="Employee Deatils">
+            <h2>Employee Deatils</h2>
+            <p>This is a <strong>POST API</strong> for Login an employer with the following fields:</p>
+            <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/login</code></p>
+            <h3>QUERY PARAMETERS</h3>
+            <table class="query-params-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>employer_id</td>
+                            <td>Employer id for the employee detail.</td>
+                        </tr>
+                        <tr>
+                            <td>employee_name</td>
+                            <td>Employee name  for the employee detail</td>
+                        </tr>
+                        <tr>
+                            <td>department</td>
+                            <td>Department for the employee detail.</td>
+                        </tr>
+                        <tr>
+                            <td>pay_cycle</td>
+                            <td>Pay cycle for the employee detail.</td>
+                        </tr>
+                        <tr>
+                            <td>number_of_garnishment</td>
+                            <td>Number of garnishment for the employee detail.</td>
+                        </tr>
+                        <tr>
+                            <td>location</td>
+                            <td>Location for the employee detail.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            <div class="flex-row">
+                <div class="code-block">
+                    <h3>Example CURL Command</h3>
+                    <pre>
+--request POST 'https://garnishment-backend.onrender.com/User/employee_details/' \
+--form 'employer_id="1"'\
+--form 'employee_name="Robat"'\
+--form 'department="HR"'\
+--form 'pay_cycle="weekly"'\
+--form 'number_of_garnishment="1"'\
+--form 'location="Taxes"'\
+
+                    </pre>
+                </div>
+                <div class="response">
+                    <h3>Response</h3>
+                    <pre>
+{
+    "message": "Employee Details Successfully Registered",
+    "status code": 201
+}
+                    </pre>
+                </div>
+            </div>
+        </section>
+        <section id="Tax Details">
+            <h2>Tax Details</h2>
+            <p>This is a <strong>POST API</strong> for storing the Tax Details with the following fields:</p>
+            <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/TaxDetails/</code></p>
+            <h3>QUERY PARAMETERS</h3>
+            <table class="query-params-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>tax_id</td>
+                            <td>Tax id field is uniquely identify the Tax data.</td>
+                        </tr>
+                        <tr>
+                            <td>employer_id</td>
+                            <td>Employee id field for building the connection between location and employer </td>
+                        </tr>
+                        <tr>
+                            <td>fedral_income_tax</td>
+                            <td>Fedral_income_tax field gives fedral_income_tax amount.</td>
+                        </tr>
+                        <tr>
+                            <td>social_and_security</td>
+                            <td>Social_and_Security field gives Social_and_Security amount.</td>
+                        </tr> 
+                        <tr>
+                            <td>medicare_tax</td>
+                            <td>Medicare_tax field gives Medicare_tax amount.</td>
+                        </tr>
+                        <tr>
+                            <td>state_tax</td>
+                            <td>state tax gives state_tax amount.</td>
+                        </tr>                         
+                    </tbody>
+                </table>
+            <div class="flex-row">
+                <div class="code-block">
+                    <h3>Example CURL Command</h3>
+                    <pre>
+--request POST 'https://garnishment-backend.onrender.com/User/TaxDetails/' \
+--form 'employer_id= 11'\
+--form 'fedral_income_tax = 4 '\
+--form 'social_and_security=10'\
+--form 'medicare_tax=3'\
+--form 'state_taxes=4'\
+                    </pre>
+                </div>
+                <div class="response">
+                    <h3>Response</h3>
+                    <pre>
+{
+    "message": "Tax Details Successfully Registered",
+    "status code": 201
+}
+                    </pre>
+                </div>
+            </div>
+        </section>
+        <section id="Department Details">
+            <h2>Department Details</h2>
+            <p>This is a <strong>POST API</strong> for storing the Department Details with the following fields:</p>
+            <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/Department/</code></p>
+            <h3>QUERY PARAMETERS</h3>
+            <table class="query-params-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>employer_id</td>
+                            <td>Employer_id  field for building the connection between Department and Department.</td>
+                        </tr>
+                        <tr>
+                            <td>department_name</td>
+                            <td>Department Name field represents the name of the department within the organization.</td>
+                        </tr>                      
+                    </tbody>
+                </table>
+            <div class="flex-row">
+                <div class="code-block">
+                    <h3>Example CURL Command</h3>
+                    <pre>
+--request POST 'https://garnishment-backend.onrender.com/User/DepartmentDetailsUpdate/int:employer_id/' \
+--form 'employer_id= 11'\
+--form 'department_name = HR '\
+
+                    </pre>
+                </div>
+                <div class="response">
+                    <h3>Response</h3>
+                    <pre>
+{
+    "success": true,
+    "message": "Data Updated successfully",
+    "status code": 200
+}
+                    </pre>
+                </div>
+            </div>
+        </section>
+        <section id="Location Details">
+            <h2>Location Details</h2>
+            <p>This is a <strong>POST API</strong> for storing the Location Details with the following fields:</p>
+            <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/Location</code></p>
+            <h3>QUERY PARAMETERS</h3>
+            <table class="query-params-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>employer_id</td>
+                            <td>employer_id  field for building the connection between Location and Employer.</td>
+                        </tr>
+                        <tr>
+                            <td>state</td>
+                            <td>State Name field for the Location detail</td>
+                        </tr>  
+                        <tr>
+                            <td>city</td>
+                            <td>City Name field for the Location detail</td>
+                        </tr>                      
+                    </tbody>
+                </table>
+            <div class="flex-row">
+                <div class="code-block">
+                    <h3>Example CURL Command</h3>
+                    <pre>
+--request POST 'https://garnishment-backend.onrender.com/User/Location' \
+--form 'employer_id= 6'\
+--form 'state = "UP" '\
+--form 'city = "Bhopal" '\
+                    </pre>
+                </div>
+                <div class="response">
+                    <h3>Response</h3>
+                    <pre>
+{
+    "message": "Location Details Successfully Registered",
+    "status code": 201
+}
+                    </pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="IWO Details">
+            <h2>IWO Details</h2>
+            <p>This is a <strong>POST API</strong> for storing the Location Details with the following fields:</p>
+            <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/IWO_Data</code></p>
+            <h3>QUERY PARAMETERS</h3>
+            <table class="query-params-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>employer_id</td>
+                            <td>Employer_id  field for building the connection between Location and Employer.</td>
+                        </tr>
+                        <tr>
+                            <td>employee_id</td>
+                            <td>Employee_id  field for building the connection between Employee and Employer.</td>
+                        </tr>  
+                        <tr>
+                            <td>IWO_Status</td>
+                            <td>IWO_Status field for the IWO detail</td>
+                        </tr>                      
+                    </tbody>
+                </table>
+            <div class="flex-row">
+                <div class="code-block">
+                    <h3>Example CURL Command</h3>
+                    <pre>
+--request POST 'https://garnishment-backend.onrender.com/User/IWO_Data' \
+--form 'employer_id= 6'\
+--form 'employee_id = 2'\
+--form 'IWO_Status = "active" '\
+                    </pre>
+                </div>
+                <div class="response">
+                    <h3>Response</h3>
+                    <pre>
+{
+    "message": "IWO detail inserted successfully",
+    "code": 201
+}
+                    </pre>
+                </div>
+            </div>
+        </section>
+        <section id="IWO PDF upload">
+            <h2>IWO PDF upload</h2>
+            <p>This is a <strong>POST API</strong> for storing IWO PDF into the Database with the following fields:</p>
+            <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/upload</code></p>
+            <h3>QUERY PARAMETERS</h3>
+            <table class="query-params-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>employer_id</td>
+                            <td>Employer_id  field for building the connection between Location and Employer.</td>
+                        </tr>
+                        <tr>
+                            <td>IWO_PDF</td>
+                            <td>IWO PDF field for the employee.</td>
+                        </tr>                    
+                    </tbody>
+                </table>
+            <div class="flex-row">
+                <div class="code-block">
+                    <h3>Example CURL Command</h3>
+                    <pre>
+--request POST 'https://garnishment-backend.onrender.com/User/upload' \
+--form 'employer_id= 6'\
+--form 'employee_id = 2'\
+--form 'IWO_Status = "active" '\
+                    </pre>
+                </div>
+                <div class="response">
+                    <h3>Response</h3>
+                    <pre>
+{
+    "message": "IWO PDF uploaded successfully",
+    "code": 201
+}
+                    </pre>
+                </div>
+            </div>
+        </section>
+    </section>
+    <section id="Import Employee Details">
+        <h2>Import Employee Details</h2>
+        <p>This is a <strong>POST API</strong> we used this API for storing the employee details using the excel with the following fields:</p>
+        <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/EmployeeImportView/int:employer_id/ </code></p>
+        <h3>QUERY PARAMETERS</h3>
+        <table class="query-params-table">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Values</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>employer_id</td>
+                        <td>Employer_id  field for building the connection between Location and Employer.</td>
+                    </tr>
+                    <tr>
+                        <td>IWO_PDF</td>
+                        <td>IWO PDF field for the employee.</td>
+                    </tr>                    
+                </tbody>
+            </table>
+        <div class="flex-row">
+            <div class="code-block">
+                <h3>Example CURL Command</h3>
+                <pre>
+--request POST 'https://garnishment-backend.onrender.com/User/EmployeeImportView/int:employer_id/ \
+--form 'file = ./csv'\
+                </pre>
+            </div>
+            <div class="response">
+                <h3>Response</h3>
+                <pre>
+{   
+    "message": "File processed successfully",
+    "status code" : 200
+}
+                </pre>
+            </div>
+        </div>
+    </section>
+
+</section>
+<section id="Calculation Data">
+    <h2>Calculation Data</h2>
+    <p>This is a <strong>POST API</strong> we used this API for storing the garnishment calculation data with the following fields:</p>
+    <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/EmployeeImportView/int:employer_id/ </code></p>
+    <h3>QUERY PARAMETERS</h3>
+    <table class="query-params-table">
+            <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Values</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>employer_id</td>
+                    <td>Employer_id  field for building the connection between location and employer.</td>
+                </tr>
+                <tr>
+                    <td>employee_id</td>
+                    <td>Employee id field for building the connection between employee and employer .</td>
+                </tr>  
+                <tr>
+                    <td>earnings</td>
+                    <td>Earnings field for the garnishment calculation amount.</td>
+                </tr>         
+                <tr>
+                    <td>garnishment_fees</td>
+                    <td>Garnishment fees name field for the garnishment calculation amount.</td>
+                </tr>       
+                <tr>
+                    <td>minimum_wages</td>
+                    <td>Minimum Wages field for the garnishment calculation amount.</td>
+                </tr>       
+                <tr>
+                    <td>arrears_greater_than_12_weeks</td>
+                    <td>Arrears greater than 12 weeks field for the garnishment calculation amount..</td>
+                </tr>  
+                <tr>
+                    <td>support_second_family</td>
+                    <td>support second family field for the garnishment calculation amount..</td>
+                </tr>  
+                <tr>
+                    <td>amount_to_withhold_child1</td>
+                    <td>Amount to withhold child1 for the garnishment calculation amount..</td>
+                </tr>
+                <tr>
+                    <td>amount_to_withhold_child2</td>
+                    <td>Amount to withhold child2 for the garnishment calculation amount..</td>
+                </tr>     
+                <tr>
+                    <td>amount_to_withhold_child3</td>
+                    <td>Amount to withhold child3 for the garnishment calculation amount..</td>
+                </tr> 
+                <tr>
+                    <td>state</td>
+                    <td>State field for finding the allocation method based on state.</td>
+                </tr> 
+                <tr>
+                    <td>number_of_arrears</td>
+                    <td>Number of arrears for the garnishment calculation amount..</td>
+                </tr>  
+                <tr>
+                    <td>arrears_amt_Child1</td>
+                    <td>Arrears amount Child1 for the garnishment calculation amount..</td>
+                </tr>  
+                <tr>
+                    <td>arrears_amt_Child2</td>
+                    <td>Arrears amount Child2 for the garnishment calculation amount..</td>
+                </tr>                             
+                <tr>
+                    <td>arrears_amt_Child3</td>
+                    <td>Arrears amount Child3 for the garnishment calculation amount..</td>
+                </tr>  
+                <tr>
+                    <td>order_id</td>
+                    <td>Order id for gives the details about the order.</td>
+                </tr>  
+
+            </tbody>
+        </table>
+    <div class="flex-row">
+        <div class="code-block">
+            <h3>Example CURL Command</h3>
+            <pre>
+--request POST 'https://garnishment-backend.onrender.com/User/CalculationDataView'
+--form 'employee_id=85'\
+--form 'employer_id = 11 '\
+--form 'earnings=620'\
+--form 'employee_name="John Doe"'\
+--form 'garnishment_fees=10'\
+--form 'minimum_wages=61'\
+--form 'arrears_greater_than_12_weeks=false'\
+--form 'support_second_family=false'\
+--form 'amount_to_withhold_child1=10'\
+--form 'amount_to_withhold_child2=5'\
+--form 'amount_to_withhold_child3=10'\
+--form 'number_of_arrears=3'\
+--form 'arrears_amt_Child1=25'\
+--form 'arrears_amt_Child2=3'\
+--form 'arrears_amt_Child3=4'\
+--form 'order_id =304'\
+            </pre>
+        </div>
+        <div class="response">
+            <h3>Response</h3>
+            <pre>
+{
+    "message": "Calculations Details Successfully Registered",
+    "status code": 200
+}
+            </pre>
+        </div>
+    </div>
+</section>
+</section>
+        <section id="DashBoard Data">
+            <h2>DashBoard Data</h2>
+            <p>This is a <strong>GET API</strong> for get the dashboard data </p>
+            <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/DashboardData</code></p>
+            <h3>QUERY PARAMETERS</h3>
+            <table class="query-params-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Total_IWO</td>
+                            <td>Total_IWO field is count of number of IWO.</td>
+                        </tr>
+                        <tr>
+                            <td>Employees_with_Single_IWO</td>
+                            <td>Employees_with_Single_IWO is count of total number of single IWO</td>
+                        </tr>
+                        <tr>
+                            <td>Employees_with_Multiple_IWO</td>
+                            <td>SEmployees_with_Multiple_IWO is count of total number of multiple IWO.</td>
+                        </tr>
+                        <tr>
+                            <td>Active_employees</td>
+                            <td>Active_employees is count of total number of active .</td>
+                        </tr>
+  
+                </table>
+            <div class="flex-row">
+                <div class="code-block">
+                    <h3>Example CURL Command</h3>
+                    <pre>
+--request GET 'https://garnishment-backend.onrender.com/User/DashboardData' \
+
+                    </pre>
+                </div>
+                <div class="response">
+                    <h3>Response</h3>
+                    <pre>
+{
+    "success": true,
+    "message": "Data Get successfully",
+    "status code": 200,
+    "data": {
+        "Total_IWO": 2,
+        "Employees_with_Single_IWO": 0,
+        "Employees_with_Multiple_IWO": 1,
+        "Active_employees": 2
+    }
+}
+                    </pre>
+                </div>
+            </div>
+        </section> 
+<section id="Get Location Details">
+            <h2>Get Location Details</h2>
+            <p>This is a <strong>GET API</strong> for get the Location Details using employer id </p>
+            <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/GetLocationDetails/int:employer_id/</code></p>
+            <h3>QUERY PARAMETERS</h3>
+            <table class="query-params-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>location_id</td>
+                            <td>location_id field is uniquely identify the location data.</td>
+                        </tr>
+                        <tr>
+                            <td>employer_id</td>
+                            <td>Employee id field for building the connection between location and employer </td>
+                        </tr>
+                        <tr>
+                            <td>state</td>
+                            <td>State field is gives details about employer state.</td>
+                        </tr>
+                        <tr>
+                            <td>city</td>
+                            <td>City field is gives details about employer city.</td>
+                        </tr>
+  
+                </table>
+            <div class="flex-row">
+                <div class="code-block">
+                    <h3>Example CURL Command</h3>
+                    <pre>
+--request GET 'https://garnishment-backend.onrender.com/User/GetLocationDetails/int:employer_id/' \
+
+                    </pre>
+                </div>
+                <div class="response">
+                    <h3>Response</h3>
+                    <pre>
+{
+    "success": true,
+    "message": "Data Get successfully",
+    "status code": 200,
+    {
+        "location_id": 5,
+        "state": "MP",
+        "city" : "Indore"
+        "employer_id": 11
+    }
+}
+                    </pre>
+                </div>
+            </div>
+        </section>
+<section id="Get Department Details">
+            <h2>Get Department Details</h2>
+            <p>This is a <strong>GET API</strong> for get the Department Details using employer id </p>
+            <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/GetDepartmentDetails/int:employer_id/</code></p>
+            <h3>QUERY PARAMETERS</h3>
+            <table class="query-params-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>department_id</td>
+                            <td>Department id field is uniquely identify the Department data.</td>
+                        </tr>
+                        <tr>
+                            <td>employer_id</td>
+                            <td>Employee id field for building the connection between location and employer </td>
+                        </tr>
+                        <tr>
+                            <td>department_name</td>
+                            <td>State field is .</td>
+                        </tr>
+  
+                </table>
+            <div class="flex-row">
+                <div class="code-block">
+                    <h3>Example CURL Command</h3>
+                    <pre>
+--request GET 'https://garnishment-backend.onrender.com/User/GetLocationDetails/int:employer_id/' \
+
+                    </pre>
+                </div>
+                <div class="response">
+                    <h3>Response</h3>
+                    <pre>
+{
+    "success": true,
+    "message": "Data Get successfully",
+    "status code": 200,
+    "data": [
+        {
+            "department_id": 5,
+            "department_name": "ME",
+            "employer_id": 11
+        }
+    ]
+}
+                    </pre>
+                </div>
+            </div>
+        </section>  
+<section id="Get Tax Details">
+            <h2>Get Tax Details</h2>
+            <p>This is a <strong>GET API</strong> for get the Get Tax Details using employer id </p>
+            <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/GetTaxDetails/int:employer_id/</code></p>
+            <h3>QUERY PARAMETERS</h3>
+            <table class="query-params-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>tax_id</td>
+                            <td>Tax id field is uniquely identify the Tax data.</td>
+                        </tr>
+                        <tr>
+                            <td>employer_id</td>
+                            <td>Employee id field for building the connection between location and employer </td>
+                        </tr>
+                        <tr>
+                            <td>fedral_income_tax</td>
+                            <td>Fedral_income_tax field gives fedral_income_tax amount.</td>
+                        </tr>
+                        <tr>
+                            <td>social_and_security</td>
+                            <td>Social_and_Security field gives Social_and_Security amount.</td>
+                        </tr> 
+                        <tr>
+                            <td>medicare_tax</td>
+                            <td>Medicare_tax field gives Medicare_tax amount.</td>
+                        </tr>
+                        <tr>
+                            <td>state_tax</td>
+                            <td>state tax gives state_tax amount.</td>
+                        </tr> 
+                </table>
+            <div class="flex-row">
+                <div class="code-block">
+                    <h3>Example CURL Command</h3>
+                    <pre>
+--request GET 'https://garnishment-backend.onrender.com/User/GetTax/int:employer_id/' \
+
+                    </pre>
+                </div>
+                <div class="response">
+                    <h3>Response</h3>
+                    <pre>
+{
+    "success": true,
+    "message": "Data Get successfully",
+    "status code": 200,
+    "data": [
+        {
+            "tax_id": 8,
+            "employer_id": 11,
+            "fedral_income_tax": 29.0,
+            "social_and_security": 21.08,
+            "medicare_tax": 4.93,
+            "state_tax": 0.0
+        }
+    ]
+}
+                    </pre>
+                </div>
+            </div>
+        </section>  
+        <section id="Get All Emplloyee Details">
+            <h2>Get All Emplloyee Details</h2>
+            <p>This is a <strong>GET API</strong> for get the Get all employee Details </p>
+            <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/GetAllEmplloyeeDetail</code></p>
+            <h3>QUERY PARAMETERS</h3>
+            <table class="query-params-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>employee_id</td>
+                            <td>Tax id field is uniquely identify the employee data.</td>
+                        </tr>
+                        <tr>
+                            <td>employer_id</td>
+                            <td>Employer id id field for building the connection between employee and employer </td>
+                        </tr>
+                        <tr>
+                            <td>employee_name</td>
+                            <td>Employee_name field gives the name of employee.</td>
+                        </tr>
+                        <tr>
+                            <td>department</td>
+                            <td>Department field gives details about department.</td>
+                        </tr> 
+                        <tr>
+                            <td>pay_cycle</td>
+                            <td>Pay_cycle field gives details about the paycyle of employee.</td>
+                        </tr>
+                        <tr>
+                            <td>number_of_garnishment</td>
+                            <td>Number of garnishment gives details about the number_of_garnishment of employee.</td>
+                        </tr> 
+                        <tr>
+                            <td>location</td>
+                            <td>location gives details about the employee location.</td>
+                        </tr> 
+                </table>
+            <div class="flex-row">
+                <div class="code-block">
+                    <h3>Example CURL Command</h3>
+                    <pre>
+--request GET 'https://garnishment-backend.onrender.com/User/GetTax/int:employer_id/' \
+
+                    </pre>
+                </div>
+                <div class="response">
+                    <h3>Response</h3>
+                    <pre>
+{
+    "success": true,
+    "message": "Data Get successfully",
+    "status code": 200,
+    "data": [
+        {
+            "employee_id": 71,
+            "employer_id": 11,
+            "employee_name": "Michael Wilson",
+            "department": "Sales",
+            "pay_cycle": "Weekly",
+            "number_of_garnishment": 3,
+            "location": "Uttar Pradesh"
+        },
+        {
+            "employee_id": 72,
+            "employer_id": 11,
+            "employee_name": "Jessica Miller",
+            "department": "Support",
+            "pay_cycle": "Monthly",
+            "number_of_garnishment": 3,
+            "location": "Rajasthan"
+        },
+        {
+            "employee_id": 73,
+            "employer_id": 11,
+            "employee_name": "David Taylor",
+            "department": "Development",
+            "pay_cycle": "Weekly",
+            "number_of_garnishment": 3,
+            "location": "Karnataka"
+        },
+        {
+            "employee_id": 74,
+            "employer_id": 11,
+            "employee_name": "Sarah Anderson",
+            "department": "Operations",
+            "pay_cycle": "Monthly",
+            "number_of_garnishment": 3,
+            "location": "Tamil Nadu"
+        },
+        {
+            "employee_id": 75,
+            "employer_id": 11,
+            "employee_name": "James Thomas",
+            "department": "Research",
+            "pay_cycle": "Weekly",
+            "number_of_garnishment": 3,
+            "location": "Bihar"
+        }
+}
+                    </pre>
+                </div>
+            </div>
+        </section>  
+        <section id="Get All Tax Details">
+            <h2>Get All Tax Details</h2>
+            <p>This is a <strong>GET API</strong> for get the Get all Tax Data </p>
+            <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/GetallTaxdetail</code></p>
+            <h3>QUERY PARAMETERS</h3>
+            <table class="query-params-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>tax_id</td>
+                            <td>Tax id field is uniquely identify the Tax data.</td>
+                        </tr>
+                        <tr>
+                            <td>employer_id</td>
+                            <td>Employee id field for building the connection between location and employer </td>
+                        </tr>
+                        <tr>
+                            <td>fedral_income_tax</td>
+                            <td>Fedral_income_tax field gives fedral_income_tax amount.</td>
+                        </tr>
+                        <tr>
+                            <td>social_and_security</td>
+                            <td>Social_and_Security field gives Social_and_Security amount.</td>
+                        </tr> 
+                        <tr>
+                            <td>medicare_tax</td>
+                            <td>Medicare_tax field gives Medicare_tax amount.</td>
+                        </tr>
+                        <tr>
+                            <td>state_tax</td>
+                            <td>state tax gives state_tax amount.</td>
+                        </tr> 
+                </table>
+            <div class="flex-row">
+                <div class="code-block">
+                    <h3>Example CURL Command</h3>
+                    <pre>
+--request GET 'https://garnishment-backend.onrender.com/User/GetAllTaxDetail' \
+
+                    </pre>
+                </div>
+                <div class="response">
+                    <h3>Response</h3>
+                    <pre>
+{
+    "success": true,
+    "message": "Data Get successfully",
+    "status code": 200,
+    "data": [
+        {
+            "tax_id": 8,
+            "employer_id": 11,
+            "fedral_income_tax": 29.0,
+            "social_and_security": 21.08,
+            "medicare_tax": 4.93,
+            "state_tax": 0.0
+        },
+        {
+            "tax_id": 10,
+            "employer_id": 5,
+            "fedral_income_tax": 8.0,
+            "social_and_security": 10.0,
+            "medicare_tax": 3.0,
+            "state_tax": 4.0
+        }
+    ]
+}
+                    </pre>
+                </div>
+            </div>
+        </section>
+        <section id="Get All Location Details">
+            <h2>Get All Location Details</h2>
+            <p>This is a <strong>GET API</strong> for retrieving all Location data</p>
+            <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/GetAllLocationDetail</code></p>
+            <h3>QUERY PARAMETERS</h3>
+            <table class="query-params-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>location_id</td>
+                            <td>location_id field is uniquely identify the location data.</td>
+                        </tr>
+                        <tr>
+                            <td>employer_id</td>
+                            <td>Employee id field for building the connection between location and employer </td>
+                        </tr>
+                        <tr>
+                            <td>state</td>
+                            <td>State field is gives details about employer state.</td>
+                        </tr>
+                        <tr>
+                            <td>city</td>
+                            <td>City field is gives details about employer city.</td>
+                        </tr>
+  
+                </table>
+            <div class="flex-row">
+                <div class="code-block">
+                    <h3>Example CURL Command</h3>
+                    <pre>
+--request GET 'https://garnishment-backend.onrender.com/User/GetAllLocationDetail' \
+
+                    </pre>
+                </div>
+                <div class="response">
+                    <h3>Response</h3>
+                    <pre>
+{
+    "success": true,
+    "message": "Data Get successfully",
+    "status code": 200,
+    "data": [
+        {
+            "location_id": 8,
+            "employer_id": 11,
+            "state": "UP",
+            "city": "Bhopal"
+        },
+        {
+            "location_id": 10,
+            "employer_id": 6,
+            "state": "UP",
+            "city": "Bhopal"
+        }
+    ]
+}
+                    </pre>
+                </div>
+            </div>
+        </section>
+<section id="Get Department Details">
+            <h2>Get Department Details</h2>
+            <p>This is a <strong>GET API</strong> for retrieving all Department data </p>
+            <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/GetAllDepartmentDetail</code></p>
+            <h3>QUERY PARAMETERS</h3>
+            <table class="query-params-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>department_id</td>
+                            <td>Department id field is uniquely identify the Department data.</td>
+                        </tr>
+                        <tr>
+                            <td>employer_id</td>
+                            <td>Employee id field for building the connection between location and employer </td>
+                        </tr>
+                        <tr>
+                            <td>department_name</td>
+                            <td>State field is .</td>
+                        </tr>
+  
+                </table>
+            <div class="flex-row">
+                <div class="code-block">
+                    <h3>Example CURL Command</h3>
+                    <pre>
+--request GET 'https://garnishment-backend.onrender.com/User/GetAllDepartmentDetail' \
+
+                    </pre>
+                </div>
+                <div class="response">
+                    <h3>Response</h3>
+                    <pre>
+{
+    "success": true,
+    "message": "Data Get successfully",
+    "status code": 200,
+    "data": [
+        {
+            "department_id": 5,
+            "department_name": "ME",
+            "employer_id": 11
+        },
+        {
+            "department_id": 6,
+            "department_name": "IT",
+            "employer_id": 10
+        },
+        {
+            "department_id": 7,
+            "department_name": "Sales & Marketing",
+            "employer_id": 12
+        }
+    ]
+}
+                    </pre>
+                </div>
+            </div>
+        </section>    
+        <section id="Get Employee Details By Employer_id">
+            <h2>Get Employee Details By Employer_id</h2>
+            <p>This is a <strong>GET API</strong> for retrieving the employee data by using employer id</p>
+            <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/getemployeedetails/int:employer_id</code></p>
+            <h3>QUERY PARAMETERS</h3>
+            <table class="query-params-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>employee_id</td>
+                            <td>Tax id field is uniquely identify the employee data.</td>
+                        </tr>
+                        <tr>
+                            <td>employer_id</td>
+                            <td>Employer id id field for building the connection between employee and employer </td>
+                        </tr>
+                        <tr>
+                            <td>employee_name</td>
+                            <td>Employee_name field gives the name of employee.</td>
+                        </tr>
+                        <tr>
+                            <td>department</td>
+                            <td>Department field gives details about department.</td>
+                        </tr> 
+                        <tr>
+                            <td>pay_cycle</td>
+                            <td>Pay_cycle field gives details about the paycyle of employee.</td>
+                        </tr>
+                        <tr>
+                            <td>number_of_garnishment</td>
+                            <td>Number of garnishment gives details about the number_of_garnishment of employee.</td>
+                        </tr> 
+                        <tr>
+                            <td>location</td>
+                            <td>location gives details about the employee location.</td>
+                        </tr> 
+                </table>
+            <div class="flex-row">
+                <div class="code-block">
+                    <h3>Example CURL Command</h3>
+                    <pre>
+--request GET 'https://garnishment-backend.onrender.com/User/getemployeedetails/int:employer_id/' \
+
+                    </pre>
+                </div>
+                <div class="response">
+                    <h3>Response</h3>
+                    <pre>
+{
+    "success": true,
+    "message": "Data Get successfully",
+    "Code": 200,
+    "data": [
+        {
+            "employee_id": 71,
+            "employer_id": 11,
+            "employee_name": "Michael Wilson",
+            "department": "Sales",
+            "pay_cycle": "Weekly",
+            "number_of_garnishment": 3,
+            "location": "Uttar Pradesh"
+        },
+        {
+            "employee_id": 72,
+            "employer_id": 11,
+            "employee_name": "Jessica Miller",
+            "department": "Support",
+            "pay_cycle": "Monthly",
+            "number_of_garnishment": 3,
+            "location": "Rajasthan"
+        },
+        {
+            "employee_id": 73,
+            "employer_id": 11,
+            "employee_name": "David Taylor",
+            "department": "Development",
+            "pay_cycle": "Weekly",
+            "number_of_garnishment": 3,
+            "location": "Karnataka"
+        },
+        {
+            "employee_id": 74,
+            "employer_id": 11,
+            "employee_name": "Sarah Anderson",
+            "department": "Operations",
+            "pay_cycle": "Monthly",
+            "number_of_garnishment": 3,
+            "location": "Tamil Nadu"
+        },
+        {
+            "employee_id": 75,
+            "employer_id": 11,
+            "employee_name": "James Thomas",
+            "department": "Research",
+            "pay_cycle": "Weekly",
+            "number_of_garnishment": 3,
+            "location": "Bihar"
+        }
+}
+                    </pre>
+                </div>
+            </div>
+        </section>
+    </section>    
+    <section id="Get Single Employee Details">
+        <h2>Get Single Employee Details</h2>
+        <p>This is a <strong>GET API</strong> for retrieving single employee data by using employer and employee id</p>
+        <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/getemployeedetails/int:employer_id</code></p>
+        <h3>QUERY PARAMETERS</h3>
+        <table class="query-params-table">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Values</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>employee_id</td>
+                        <td>Tax id field is uniquely identify the employee data.</td>
+                    </tr>
+                    <tr>
+                        <td>employer_id</td>
+                        <td>Employer id id field for building the connection between employee and employer </td>
+                    </tr>
+                    <tr>
+                        <td>employee_name</td>
+                        <td>Employee_name field gives the name of employee.</td>
+                    </tr>
+                    <tr>
+                        <td>department</td>
+                        <td>Department field gives details about department.</td>
+                    </tr> 
+                    <tr>
+                        <td>pay_cycle</td>
+                        <td>Pay_cycle field gives details about the paycyle of employee.</td>
+                    </tr>
+                    <tr>
+                        <td>number_of_garnishment</td>
+                        <td>Number of garnishment gives details about the number_of_garnishment of employee.</td>
+                    </tr> 
+                    <tr>
+                        <td>location</td>
+                        <td>location gives details about the employee location.</td>
+                    </tr> 
+            </table>
+        <div class="flex-row">
+            <div class="code-block">
+                <h3>Example CURL Command</h3>
+                <pre>
+--request GET 'https://garnishment-backend.onrender.com/User/getemployeedetails/int:employer_id/' \
+
+                </pre>
+            </div>
+            <div class="response">
+                <h3>Response</h3>
+                <pre>
+{
+"success": true,
+"message": "Data Get successfully",
+"Code": 200,
+"data": [
+    {
+        "employee_id": 71,
+        "employer_id": 11,
+        "employee_name": "Michael Wilson",
+        "department": "Sales",
+        "pay_cycle": "Weekly",
+        "number_of_garnishment": 3,
+        "location": "Uttar Pradesh"
+    },
+    {
+        "employee_id": 72,
+        "employer_id": 11,
+        "employee_name": "Jessica Miller",
+        "department": "Support",
+        "pay_cycle": "Monthly",
+        "number_of_garnishment": 3,
+        "location": "Rajasthan"
+    },
+    {
+        "employee_id": 73,
+        "employer_id": 11,
+        "employee_name": "David Taylor",
+        "department": "Development",
+        "pay_cycle": "Weekly",
+        "number_of_garnishment": 3,
+        "location": "Karnataka"
+    },
+    {
+        "employee_id": 74,
+        "employer_id": 11,
+        "employee_name": "Sarah Anderson",
+        "department": "Operations",
+        "pay_cycle": "Monthly",
+        "number_of_garnishment": 3,
+        "location": "Tamil Nadu"
+    },
+    {
+        "employee_id": 75,
+        "employer_id": 11,
+        "employee_name": "James Thomas",
+        "department": "Research",
+        "pay_cycle": "Weekly",
+        "number_of_garnishment": 3,
+        "location": "Bihar"
+    }
+}
+                </pre>
+            </div>
+        </div>
+    </section>
+<section id="Get Single Tax Details">
+        <h2>Get Single Tax Details</h2>
+        <p>This is a <strong>GET API</strong> for retrieving single Tax data by using employer and Tax id</p>
+        <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/GetSingleEmployee/int:employer_id/int:tax_id/</code></p>
+        <h3>QUERY PARAMETERS</h3>
+        <table class="query-params-table">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Values</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>tax_id</td>
+                        <td>Tax id field is uniquely identify the Tax data.</td>
+                    </tr>
+                    <tr>
+                        <td>employer_id</td>
+                        <td>Employee id field for building the connection between location and employer </td>
+                    </tr>
+                    <tr>
+                        <td>fedral_income_tax</td>
+                        <td>Fedral_income_tax field gives fedral_income_tax amount.</td>
+                    </tr>
+                    <tr>
+                        <td>social_and_security</td>
+                        <td>Social_and_Security field gives Social_and_Security amount.</td>
+                    </tr> 
+                    <tr>
+                        <td>medicare_tax</td>
+                        <td>Medicare_tax field gives Medicare_tax amount.</td>
+                    </tr>
+                    <tr>
+                        <td>state_tax</td>
+                        <td>state tax gives state_tax amount.</td>
+                    </tr> 
+            </table>
+        <div class="flex-row">
+            <div class="code-block">
+                <h3>Example CURL Command</h3>
+                <pre>
+--request GET 'https://garnishment-backend.onrender.com/User//GetSingleEmployee/int:employer_id/int:tax_id/' \
+
+                </pre>
+            </div>
+            <div class="response">
+                <h3>Response</h3>
+                <pre>
+{
+"success": true,
+"message": "Data Get successfully",
+"status code": 200,
+"data": [
+    {
+        "tax_id": 8,
+        "employer_id": 11,
+        "fedral_income_tax": 29.0,
+        "social_and_security": 21.08,
+        "medicare_tax": 4.93,
+        "state_tax": 0.0
+    } ]
+}
+                </pre>
+            </div>
+        </div>
+    </section>
+    <section id="Get Single Location Details">
+        <h2>Get Single Location Details</h2>
+        <p>This is a <strong>GET API</strong> for retrieving single Tax data by using employer and Location id</p>
+        <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/GetAllLocationDetail</code></p>
+        <h3>QUERY PARAMETERS</h3>
+        <table class="query-params-table">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Values</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>location_id</td>
+                        <td>location_id field is uniquely identify the location data.</td>
+                    </tr>
+                    <tr>
+                        <td>employer_id</td>
+                        <td>Employee id field for building the connection between location and employer </td>
+                    </tr>
+                    <tr>
+                        <td>state</td>
+                        <td>State field is gives details about employer state.</td>
+                    </tr>
+                    <tr>
+                        <td>city</td>
+                        <td>City field is gives details about employer city.</td>
+                    </tr>
+
+            </table>
+        <div class="flex-row">
+            <div class="code-block">
+                <h3>Example CURL Command</h3>
+                <pre>
+--request GET 'https://garnishment-backend.onrender.com/User/GetAllLocationDetail' \
+
+                </pre>
+            </div>
+            <div class="response">
+                <h3>Response</h3>
+                <pre>
+{
+"success": true,
+"message": "Data Get successfully",
+"status code": 200,
+"data": [
+    {
+        "location_id": 8,
+        "employer_id": 11,
+        "state": "UP",
+        "city": "Bhopal"
+    },
+    {
+        "location_id": 10,
+        "employer_id": 6,
+        "state": "UP",
+        "city": "Bhopal"
+    }
+]
+}
+                </pre>
+            </div>
+        </div>
+    </section>
+<section id="Get Single Department Details">
+        <h2>Get Single Department Details</h2>
+        <p>This is a <strong>GET API</strong> for retrieving single Department data by using employer and Department id</p>
+        <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/GetSingleDepartment/int:employer_id/int:department_id/</code></p>
+        <h3>QUERY PARAMETERS</h3>
+        <table class="query-params-table">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Values</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>department_id</td>
+                        <td>Department id field is uniquely identify the Department data.</td>
+                    </tr>
+                    <tr>
+                        <td>employer_id</td>
+                        <td>Employee id field for building the connection between location and employer </td>
+                    </tr>
+                    <tr>
+                        <td>department_name</td>
+                        <td>State field is .</td>
+                    </tr>
+
+            </table>
+        <div class="flex-row">
+            <div class="code-block">
+                <h3>Example CURL Command</h3>
+                <pre>
+--request GET 'https://garnishment-backend.onrender.com/User/GetSingleDepartment/int:employer_id/int:department_id/' \
+
+                </pre>
+            </div>
+            <div class="response">
+                <h3>Response</h3>
+                <pre>
+{
+"success": true,
+"message": "Data Get successfully",
+"status code": 200,
+"data": [
+    {
+        "department_id": 5,
+        "department_name": "ME",
+        "employer_id": 11
+    } ]
+}
+                </pre>
+            </div>
+        </div>
+    </section>  
+    <section id="Export Employee Data CSV">
+        <h2>Export Employee Data CSV</h2>
+        <p>This is a <strong>GET API</strong> for Exporting employee data into CSV file</p>
+        <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/getemployeedetails/int:employer_id</code></p>
+        <h3>QUERY PARAMETERS</h3>
+        <table class="query-params-table">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Values</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>employee_id</td>
+                        <td>Tax id field is uniquely identify the employee data.</td>
+                    </tr>
+                    <tr>
+                        <td>employer_id</td>
+                        <td>Employer id id field for building the connection between employee and employer </td>
+                    </tr>
+                    <tr>
+                        <td>employee_name</td>
+                        <td>Employee_name field gives the name of employee.</td>
+                    </tr>
+                    <tr>
+                        <td>department</td>
+                        <td>Department field gives details about department.</td>
+                    </tr> 
+                    <tr>
+                        <td>pay_cycle</td>
+                        <td>Pay_cycle field gives details about the paycyle of employee.</td>
+                    </tr>
+                    <tr>
+                        <td>number_of_garnishment</td>
+                        <td>Number of garnishment gives details about the number_of_garnishment of employee.</td>
+                    </tr> 
+                    <tr>
+                        <td>location</td>
+                        <td>location gives details about the employee location.</td>
+                    </tr> 
+            </table>
+        <div class="flex-row">
+            <div class="code-block">
+                <h3>Example CURL Command</h3>
+                <pre>
+--request GET 'https://garnishment-backend.onrender.com/User/ExportEmployees/int:employer_id/' \
+
+                </pre>
+            </div>
+            <div class="response">
+                <h3>Response</h3>
+                <pre>   
+{
+    employees_11.csv
+}
+                </pre>
+            </div>
+        </div>
+    </section>
+    <section id="Garnishment Calculation Result">
+        <h2>Garnishment Calculation Result</h2>
+        <p>This is a <strong>GET API</strong> for retrieving the Garnishment Calculation Result by using the employer and employee id</p>
+        <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/Gcalculations/int:employer_id/int:employee_id/</code></p>
+        <h3>QUERY PARAMETERS</h3>
+        <table class="query-params-table">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Values</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>employee_id</td>
+                        <td>Tax id field is uniquely identify the employee data.</td>
+                    </tr>
+                    <tr>
+                        <td>employer_id</td>
+                        <td>Employer id id field for building the connection between employee and employer </td>
+                    </tr>
+                    <tr>
+                        <td>result</td>
+                        <td>Result field gives the total garnishment amount.</td>
+                    </tr>
+                    <tr>
+                        <td>department</td>
+                        <td>Department field gives details about department.</td>
+                    </tr> 
+                    <tr>
+                        <td>timestamp</td>
+                        <td>Timestamp field provides the date and time of the garnishment calculation</td>
+                    </tr>
+            </table>
+        <div class="flex-row">
+            <div class="code-block">
+                <h3>Example CURL Command</h3>
+                <pre>
+--request GET 'https://garnishment-backend.onrender.com/User/Gcalculations/int:employer_id/int:employee_id/' \
+
+                </pre>
+            </div>
+            <div class="response">
+                <h3>Response</h3>
+                <pre>   
+{
+    "success": true,
+    "message": "Data fetched successfully",
+    "status code": 200,
+    "data": {
+        "id": 49,
+        "employee_id": 80,
+        "employer_id": 11,
+        "result": 218.99,
+        "timestamp": "2024-07-22T03:59:56.085043Z"
+    }
+}
+                </pre>
+            </div>
+        </div>
+    </section>
+<section id="GET All Garnishment Calculation Result">
+        <h2>Garnishment Calculation Result</h2>
+        <p>This is a <strong>GET API</strong> for retrieving all Garnishment Calculation Result by using the employer</p>
+        <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/GetResultDetails/int:employer_id/</code></p>
+        <h3>QUERY PARAMETERS</h3>
+        <table class="query-params-table">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Values</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>employee_id</td>
+                        <td>Tax id field is uniquely identify the employee data.</td>
+                    </tr>
+                    <tr>
+                        <td>employer_id</td>
+                        <td>Employer id id field for building the connection between employee and employer </td>
+                    </tr>
+                    <tr>
+                        <td>result</td>
+                        <td>Result field gives the total garnishment amount.</td>
+                    </tr>
+                    <tr>
+                        <td>department</td>
+                        <td>Department field gives details about department.</td>
+                    </tr> 
+                    <tr>
+                        <td>timestamp</td>
+                        <td>Timestamp field provides the date and time of the garnishment calculation</td>
+                    </tr>
+            </table>
+        <div class="flex-row">
+            <div class="code-block">
+                <h3>Example CURL Command</h3>
+                <pre>
+--request GET 'https://garnishment-backend.onrender.com/User/GetResultDetails/int:employer_id/' \
+
+                </pre>
+            </div>
+            <div class="response">
+                <h3>Response</h3>
+                <pre>   
+{
+    "success": true,
+    "message": "Data retrieved successfully",
+    "Code": 200,
+    "data": [
+        {
+            "id": 49,
+            "employee_id": 80,
+            "employer_id": 11,
+            "result": 218.99,
+            "timestamp": "2024-07-22T03:59:56.085043Z"
+        },
+        {
+            "id": 50,
+            "employee_id": 81,
+            "employer_id": 11,
+            "result": 3512.99,
+            "timestamp": "2024-07-22T04:00:31.705548Z"
+        },
+        {
+            "id": 51,
+            "employee_id": 84,
+            "employer_id": 11,
+            "result": 666.99,
+            "timestamp": "2024-07-22T04:01:41.869615Z"
+        },
+        {
+            "id": 52,
+            "employee_id": 85,
+            "employer_id": 11,
+            "result": 0.0,
+            "timestamp": "2024-07-22T04:02:14.384026Z"
+        } ]
+}
+                </pre>
+            </div>
+        </div>
+    </section>
+    <section id="GET 5 Recent Log Data">
+        <h2>GET 5 Recent Log Data</h2>
+        <p>This is a <strong>GET API</strong> for retrieving all Garnishment Calculation Result by using the employer</p>
+        <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/logdata/</code></p>
+        <h3>QUERY PARAMETERS</h3>
+        <table class="query-params-table">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Values</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>id</td>
+                        <td>id field uniquely identify data.</td>
+                    </tr>
+                    <tr>
+                        <td>action</td>
+                        <td>Action field provides information about the activity.</td>
+                    </tr>
+                    <tr>
+                        <td>details</td>
+                        <td>Details field provides detail information about the activity.</td>
+                    </tr> 
+                    <tr>
+                        <td>timestamp</td>
+                        <td>Timestamp field provides the date and time of the garnishment calculation</td>
+                    </tr>
+            </table>
+        <div class="flex-row">
+            <div class="code-block">
+                <h3>Example CURL Command</h3>
+                <pre>
+--request GET 'https://garnishment-backend.onrender.com/User/GetResultDetails/int:employer_id/' \
+
+                </pre>
+            </div>
+            <div class="response">
+                <h3>Response</h3>
+                <pre>   
+{
+    "success": true,
+    "message": "Data Get successfully",
+    "Code": 200,
+    "data": [
+        {
+            "id": 310,
+            "action": "Department details added",
+            "details": "Department details added successfully for Department ID7",
+            "timestamp": "2024-07-29T06:34:40.728181Z",
+            "ip_address": null,
+            "additional_info": null
+        },
+        {
+            "id": 309,
+            "action": "Department details added",
+            "details": "Department details added successfully for Department ID6",
+            "timestamp": "2024-07-29T06:33:29.309497Z",
+            "ip_address": null,
+            "additional_info": null
+        },
+        {
+            "id": 308,
+            "action": "Calculation data Added",
+            "details": "Calculation data Added successfully with employer ID 11 and employee ID 90",
+            "timestamp": "2024-07-28T15:45:27.012446Z",
+            "ip_address": null,
+            "additional_info": null
+        },
+        {
+            "id": 307,
+            "action": "Location details added",
+            "details": "Location details added successfully for Location ID10",
+            "timestamp": "2024-07-27T11:48:32.077872Z",
+            "ip_address": null,
+            "additional_info": null
+        },
+        {
+            "id": 306,
+            "action": "Tax details added",
+            "details": "Tax details added successfully for Tax ID10",
+            "timestamp": "2024-07-27T11:32:55.596662Z",
+            "ip_address": null,
+            "additional_info": null
+        }
+    ]
+}
+                </pre>
+            </div>
+        </div>
+    </section>
+<section id="Update Employer Details">
+        <h2>Update Employer Details</h2>
+        <p>This is a <strong>PUT API</strong> for Updating Employer details</p>
+        <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/employer-profile/int:employer_id//</code></p>
+        <h3>QUERY PARAMETERS</h3>
+        <table class="query-params-table">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Values</th>
+                    </tr>
+                </thead>
+                <tbody>
+ <tr>
+        <td>employer_name</td>
+        <td>Employer Name field represents the name of the employer.</td>
+    </tr>
+    <tr>
+        <td>federal_employer_identification_number</td>
+        <td>Federal Employer Identification Number field is a unique identifier for the employer assigned by the federal government.</td>
+    </tr>
+    <tr>
+        <td>street_name</td>
+        <td>Street Name field specifies the name of the street where the employer is located.</td>
+    </tr>
+    <tr>
+        <td>city</td>
+        <td>City field indicates the city where the employer's office is situated.</td>
+    </tr>
+    <tr>
+        <td>state</td>
+        <td>State field denotes the state where the employer's office is located.</td>
+    </tr>
+    <tr>
+        <td>country</td>
+        <td>Country field represents the country of the employer's location.</td>
+    </tr>
+    <tr>
+        <td>zipcode</td>
+        <td>Zipcode field provides the postal code of the employer's address.</td>
+    </tr>
+    <tr>
+        <td>email</td>
+        <td>Email field contains the contact email address of the employer.</td>
+    </tr>
+    <tr>
+        <td>number_of_employees</td>
+        <td>Number of Employees field indicates the total number of employees working for the employer.</td>
+    </tr>
+    <tr>
+        <td>department</td>
+        <td>Department field specifies the department within the organization.</td>
+    </tr>
+    <tr>
+        <td>location</td>
+        <td>Location field denotes the geographical location of the employer.</td>
+    </tr>
+            </table>
+        <div class="flex-row">
+            <div class="code-block">
+                <h3>Example CURL Command</h3>
+                <pre>
+--request GET 'https://garnishment-backend.onrender.com/User/employer-profile/int:employer_id/' \
+--form 'employer_name="Ramesh yadav"' \
+--form 'federal_employer_identification_number=494404411' \
+--form 'street_name="Vijay Nagar"' \
+--form 'city="Indore"' \
+--form 'state="MP"' \
+--form 'country="India"' \
+--form 'zipcode=452010'\
+--form 'email="johen@gmail.com"'\
+--form 'number_of_employees=452010'\
+--form 'department="HR'\
+--form 'location="IND"'\
+                </pre>
+            </div>
+            <div class="response">
+                <h3>Response</h3>
+                <pre>   
+{
+    "success": true,
+    "message": "Data Updated successfully",
+    "status code": 200
+}
+                </pre>
+            </div>
+        </div>
+    </section>
+    <section id="Update Employee Deatils">
+        <h2>Update Employee Deatils</h2>
+        <p>This is a <strong>PUT API</strong> for Updating the employee details:</p>
+        <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/employee_details/int:employee_id</code></p>
+        <h3>QUERY PARAMETERS</h3>
+        <table class="query-params-table">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Values</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>employer_id</td>
+                        <td>Employer ID field is a unique identifier for the employer.</td>
+                    </tr>
+                    <tr>
+                        <td>employee_name</td>
+                        <td>Employee Name field represents the name of the employee.</td>
+                    </tr>
+                    <tr>
+                        <td>net_pay</td>
+                        <td>Net Pay field indicates the total net pay received by the employee.</td>
+                    </tr>
+                    <tr>
+                        <td>pay_cycle</td>
+                        <td>Pay Cycle field denotes the frequency at which the employee is paid (e.g., weekly,Monthly, bi-weekly).</td>
+                    </tr>
+                    <tr>
+                        <td>number_of_garnishment</td>
+                        <td>Number of Garnishments field indicates the total number of garnishments applied to the employee's pay.</td>
+                    </tr>
+                    <tr>
+                        <td>location</td>
+                        <td>Location field denotes the geographical location of the employee.</td>
+                    </tr>
+                    <tr>
+                        <td>department</td>
+                        <td>Department field specifies the department within the organization where the employee works.</td>
+                    </tr>
+                </tbody>
+            </table>
+        <div class="flex-row">
+            <div class="code-block">
+                <h3>Example CURL Command</h3>
+                <pre>
+--request POST 'https://garnishment-backend.onrender.com/User/employee_details/' \
+--form 'employer_id="1"'\
+--form 'employee_name="Mary Thompson"'\
+--form 'department="QA"'\
+--form 'pay_cycle="Monthly"'\
+--form 'number_of_garnishment="1"'\
+--form 'location="Taxes"'\
+
+                </pre>
+            </div>
+            <div class="response">
+                <h3>Response</h3>
+                <pre>
+{
+    "success": true,
+    "message": "Data Updated successfully",
+    "status code": 200
+}           </pre>
+            </div>
+        </div>
+    </section>
+    <section id="Update Tax Details">
+        <h2>Update Tax Details</h2>
+        <p>This is a <strong>POST API</strong> for Updating the Tax Details with the following fields:</p>
+        <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/TaxDetailsUpdate/int:employer_id</code></p>
+        <h3>QUERY PARAMETERS</h3>
+        <table class="query-params-table">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Values</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>tax_id</td>
+                        <td>Tax id field is uniquely identify the Tax data.</td>
+                    </tr>
+                    <tr>
+                        <td>employer_id</td>
+                        <td>Employee id field for building the connection between location and employer </td>
+                    </tr>
+                    <tr>
+                        <td>fedral_income_tax</td>
+                        <td>Fedral_income_tax field gives fedral_income_tax amount.</td>
+                    </tr>
+                    <tr>
+                        <td>social_and_security</td>
+                        <td>Social_and_Security field gives Social_and_Security amount.</td>
+                    </tr> 
+                    <tr>
+                        <td>medicare_tax</td>
+                        <td>Medicare_tax field gives Medicare_tax amount.</td>
+                    </tr>
+                    <tr>
+                        <td>state_tax</td>
+                        <td>state tax gives state_tax amount.</td>
+                    </tr>                         
+                </tbody>
+            </table>
+        <div class="flex-row">
+            <div class="code-block">
+                <h3>Example CURL Command</h3>
+                <pre>
+--request PUT 'https://garnishment-backend.onrender.com/User/TaxDetailsUpdate/int:employer_id/' \
+--form 'employer_id= 11'\
+--form 'fedral_income_tax = 4 '\
+--form 'social_and_security=10'\
+--form 'medicare_tax=3'\
+--form 'state_taxes=4'\
+                </pre>
+            </div>
+            <div class="response">
+                <h3>Response</h3>
+                <pre>
+{
+    "success": true,
+    "message": "Data Updated successfully",
+    "status code": 200
+}
+                </pre>
+            </div>
+        </div>
+    </section>
+    <section id="Update Department Details">
+        <h2>Update Department Details</h2>
+        <p>This is a <strong>PUT API</strong> for Updating the Department Details with the following fields:</p>
+        <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/Department/</code></p>
+        <h3>QUERY PARAMETERS</h3>
+        <table class="query-params-table">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Values</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>employer_id</td>
+                        <td>Employer_id  field for building the connection between Department and Department.</td>
+                    </tr>
+                    <tr>
+                        <td>department_name</td>
+                        <td>Department Name field represents the name of the department within the organization.</td>
+                    </tr>                      
+                </tbody>
+            </table>
+        <div class="flex-row">
+            <div class="code-block">
+                <h3>Example CURL Command</h3>
+                <pre>
+--request PUT 'https://garnishment-backend.onrender.com/User/DepartmentDetailsUpdate/int:employer_id/' \
+--form 'employer_id= 11'\
+--form 'department_name = HR '\
+
+                </pre>
+            </div>
+            <div class="response">
+                <h3>Response</h3>
+                <pre>
+{
+"success": true,
+"message": "Data Updated successfully",
+"status code": 200
+}
+                </pre>
+            </div>
+        </div>
+    </section>
+    <section id="Update Location Details">
+        <h2>Update Location Details</h2>
+        <p>This is a <strong>PUT API</strong> for updating the Location Details with the following fields:</p>
+        <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/LocatiionDetailsUpdate/int:employer_id/</code></p>
+        <h3>QUERY PARAMETERS</h3>
+        <table class="query-params-table">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Values</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>employer_id</td>
+                        <td>employer_id  field for building the connection between Location and Employer.</td>
+                    </tr>
+                    <tr>
+                        <td>state</td>
+                        <td>State Name field for the Location detail</td>
+                    </tr>  
+                    <tr>
+                        <td>city</td>
+                        <td>City Name field for the Location detail</td>
+                    </tr>                      
+                </tbody>
+            </table>
+        <div class="flex-row">
+            <div class="code-block">
+                <h3>Example CURL Command</h3>
+                <pre>
+--request PUT 'https://garnishment-backend.onrender.com/User/LocatiionDetailsUpdate/int:employer_id/' \
+--form 'employer_id= 6'\
+--form 'state = "UP" '\
+--form 'city = "Bhopal" '\
+                </pre>
+            </div>
+            <div class="response">
+                <h3>Response</h3>
+                <pre>
+{
+"success": true,
+"message": "Data Updated successfully",
+"status code": 200
+}
+                </pre>
+            </div>
+        </div>
+    </section>
+    <section id="Delete Employee Deatils">
+        <h2>Delete Employee Deatils</h2>
+        <p>This is a <strong>DELETE API</strong> for Deleting the employee details:</p>
+        <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/EmployeeDelete/int:employer_id/int:employee_id/</code></p>
+        <h3>QUERY PARAMETERS</h3>
+        <table class="query-params-table">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Values</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>employer_id</td>
+                        <td>Employer ID field is a unique identifier for the employer.</td>
+                    </tr>
+                    <tr>
+                        <td>employee_name</td>
+                        <td>Employee Name field represents the name of the employee.</td>
+                    </tr>
+                    <tr>
+                        <td>net_pay</td>
+                        <td>Net Pay field indicates the total net pay received by the employee.</td>
+                    </tr>
+                    <tr>
+                        <td>pay_cycle</td>
+                        <td>Pay Cycle field denotes the frequency at which the employee is paid (e.g., weekly,Monthly, bi-weekly).</td>
+                    </tr>
+                    <tr>
+                        <td>number_of_garnishment</td>
+                        <td>Number of Garnishments field indicates the total number of garnishments applied to the employee's pay.</td>
+                    </tr>
+                    <tr>
+                        <td>location</td>
+                        <td>Location field denotes the geographical location of the employee.</td>
+                    </tr>
+                    <tr>
+                        <td>department</td>
+                        <td>Department field specifies the department within the organization where the employee works.</td>
+                    </tr>
+                </tbody>
+            </table>
+        <div class="flex-row">
+            <div class="code-block">
+                <h3>Example CURL Command</h3>
+                <pre>
+--request DELETE 'https://garnishment-backend.onrender.com/User/EmployeeDelete/int:employer_id/int:employee_id/' \
+
+                </pre>
+            </div>
+            <div class="response">
+                <h3>Response</h3>
+                <pre>
+{
+    "success": true,
+    "message": "Data Updated successfully",
+    "status code": 200
+}           </pre>
+            </div>
+        </div>
+    </section>
+    <section id="Delete Tax Details">
+        <h2>Delete Tax Details</h2>
+        <p>This is a <strong>DELETE API</strong> for Deleting the Tax Details with the following fields:</p>
+        <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/TaxDetailsUpdate/int:employer_id</code></p>
+        <h3>QUERY PARAMETERS</h3>
+        <table class="query-params-table">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Values</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>tax_id</td>
+                        <td>Tax id field is uniquely identify the Tax data.</td>
+                    </tr>
+                    <tr>
+                        <td>employer_id</td>
+                        <td>Employee id field for building the connection between location and employer </td>
+                    </tr>
+                    <tr>
+                        <td>fedral_income_tax</td>
+                        <td>Fedral_income_tax field gives fedral_income_tax amount.</td>
+                    </tr>
+                    <tr>
+                        <td>social_and_security</td>
+                        <td>Social_and_Security field gives Social_and_Security amount.</td>
+                    </tr> 
+                    <tr>
+                        <td>medicare_tax</td>
+                        <td>Medicare_tax field gives Medicare_tax amount.</td>
+                    </tr>
+                    <tr>
+                        <td>state_tax</td>
+                        <td>state tax gives state_tax amount.</td>
+                    </tr>                         
+                </tbody>
+            </table>
+        <div class="flex-row">
+            <div class="code-block">
+                <h3>Example CURL Command</h3>
+                <pre>
+--request DELETE 'https://garnishment-backend.onrender.com/User/TaxDetailsUpdate/int:employer_id/' \
+                </pre>
+            </div>
+            <div class="response">
+                <h3>Response</h3>
+                <pre>
+{
+    "success": true,
+    "message": "Tax Data Deleted successfully",
+    "status code": 200
+}             </pre>
+            </div>
+        </div>
+    </section>
+    <section id="Delete Department Details">
+        <h2>Delete Department Details</h2>
+        <p>This is a <strong>DELETE API</strong> for Deleting the Department Details with the following fields:</p>
+        <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/Department/</code></p>
+        <h3>QUERY PARAMETERS</h3>
+        <table class="query-params-table">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Values</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>employer_id</td>
+                        <td>Employer_id  field for building the connection between Department and Department.</td>
+                    </tr>
+                    <tr>
+                        <td>department_name</td>
+                        <td>Department Name field represents the name of the department within the organization.</td>
+                    </tr>                      
+                </tbody>
+            </table>
+        <div class="flex-row">
+            <div class="code-block">
+                <h3>Example CURL Command</h3>
+                <pre>
+--request DELETE 'https://garnishment-backend.onrender.com/User/DepartmentDetailsUpdate/int:employer_id/' \
+
+
+                </pre>
+            </div>
+            <div class="response">
+                <h3>Response</h3>
+                <pre>
+{
+"success": true,
+"message": "Department Data Deleted successfully"",
+"status code": 200
+}
+                </pre>
+            </div>
+        </div>
+</section>
+    <section id="Delete Location Details">
+        <h2>Delete Location Details</h2>
+        <p>This is a <strong>DELETE API</strong> for Deleting the Location Details with the following fields:</p>
+        <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/LocatiionDetailsUpdate/int:employer_id/</code></p>
+        <h3>QUERY PARAMETERS</h3>
+        <table class="query-params-table">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Values</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>employer_id</td>
+                        <td>employer_id  field for building the connection between Location and Employer.</td>
+                    </tr>
+                    <tr>
+                        <td>state</td>
+                        <td>State Name field for the Location detail</td>
+                    </tr>  
+                    <tr>
+                        <td>city</td>
+                        <td>City Name field for the Location detail</td>
+                    </tr>                      
+                </tbody>
+            </table>
+        <div class="flex-row">
+            <div class="code-block">
+                <h3>Example CURL Command</h3>
+                <pre>
+--request DELETE 'https://garnishment-backend.onrender.com/User/LocatiionDetailsUpdate/int:employer_id/' \
+
+                </pre>
+            </div>
+            <div class="response">
+                <h3>Response</h3>
+                <pre>
+{
+    "success": true,
+    "message": "Location Data Deleted successfully",
+    "status code": 200
+}
+                </pre>
+            </div>
+        </div>
+    </section>
+    </div>
+</body>
+</html>
+
