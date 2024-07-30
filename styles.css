@@ -111,7 +111,7 @@ body {
 .flex-row {
     display: flex;
     justify-content: space-between;
-    gap: 15px;
+    gap: 10px;
 }
 /* New styles for the query parameters table */
 .query-params-table {
