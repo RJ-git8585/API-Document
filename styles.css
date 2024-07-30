@@ -110,7 +110,7 @@ body {
 }
 .flex-row {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     gap: 10px;
 }
 /* New styles for the query parameters table */
