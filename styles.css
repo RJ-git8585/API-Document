@@ -70,7 +70,7 @@ body {
     flex: 1;
     display: inline-block;
     height: 250px; /* Ensure the height adjusts according to content */
-    max-width: 600px; /* Limit the maximum width */
+    max-width: 5%; /* Limit the maximum width */
 }
 .response {
     background-color: #f9f9f9;
