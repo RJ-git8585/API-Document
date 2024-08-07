@@ -13,10 +13,11 @@ body {
     position: fixed;
     height: 100%;
     overflow-y: auto;
+    z-index: 999;   
 }
 .sidebar h2 {
     color:  #ebeef0;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
 }
 .sidebar p {
     margin: 5px 0;
@@ -27,8 +28,9 @@ body {
     display: block;
     color: #adb5bd;
     text-decoration: none;
-    margin: 10px 0;
+    margin: 6px 0;
     font-size: 14px;
+    padding: 6px 0;
 }
 .sidebar a:hover {
     color: #4b6387;
@@ -68,14 +70,14 @@ body {
     flex: 1;
     display: inline-block;
     height: 250px; /* Ensure the height adjusts according to content */
-    max-width: 600px; /* Limit the maximum width */
+    max-width: 500px; /* Limit the maximum width */
 }
 .response {
     background-color: #f9f9f9;
     color: #343a40;
     border: 1px solid #ddd;
     margin-right: 0;
-    max-width: 600px; /* Limit the maximum width */
+    max-width: 500px; /* Limit the maximum width */
 }
 .code-block pre, .response pre {
     margin: 0;
@@ -108,8 +110,8 @@ body {
 }
 .flex-row {
     display: flex;
-    justify-content: space-between;
-    gap: 15px;
+    /* justify-content: space-between; */
+    gap: 10px;
 }
 /* New styles for the query parameters table */
 .query-params-table {
