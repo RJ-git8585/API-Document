@@ -27,30 +27,35 @@
         <a href="#IWO PDF upload">IWO PDF UPLOAD</a>
         <a href="#Import Employee Details">IMPORT EMPLOYEE DETAILS </a>
         <a href="#DashBoard Data">DASHBORAD DATA</a>
+        <a href="#Garnishment Calculation Data">GARNISHMENT CALCULATION DATA</a>
+        <a href="#Single Student Loan Calculation Data">SINGLE STUDENT LOAN CALCULATION DATA</a>
+        <a href="#Multiple Student Loan Calculation Data">MULTIPLE STUDENT LOAN CALCULATION DATA</a>
         <a href="#Get Location Details">GET LOCATION DETAILS</a>
         <a href="#Get Department Details">GET DEPARTMENT DETAILS</a>
         <a href="#Get Tax Details">GET TAX DETAILS</a>
-        <a href="#Get All Emplloyee Details">GET ALL EMPLOYEE DETAILS</a>
-        <a href="#Get All Departments">GET ALL DEPARTMENTS </a>
-        <a href="#Get All Taxs">GET ALL TAXS </a>
-        <a href="#Get All locations">GET ALL LOCATIONS</a>
+        <a href="#Get All Employee Details">GET ALL EMPLOYEE DETAILS</a>
+        <a href="Get All Department Details">GET ALL DEPARTMENTS DETAILS</a>
+        <a href="#Get All Tax Details">GET ALL TAX DETAILS</a>
+        <a href="#Get All location Details ">GET ALL LOCATIONS DETAILS</a>
         <a href="#Get Single Employee">GET SINGLE EMPLOYEE</a>
         <a href="#Get Single Department">GET SINGLE DEPARTMENT</a>
         <a href="#Get Single Location">GET SINGLE LOCATION</a>
         <a href="#Get Single Tax">GET SINGLE TAX</a>
         <a href="#Export Employee Data CSV File">EXPORT EMPLOYEE Data CSV FILE</a>
-        <a href="#Garnishment Calculation Result">GARNISHMENT CALCULATION RESULT</a>
+        <a href="#Get Garnishment Calculation Result">GET GARNISHMENT CALCULATION RESULT</a>
+        <a href="Get Single Student Loan Calculation Result" >GET SINGLE STUDENT LOAN CALCULATION RESULT</a>
+        <a href="Get Multiple Student Loan Calculation Result" >GET MULTIPLE STUDENT LOAN CALCULATION RESULT</a>
         <a href="#Get ALL Garnishment Calculation Result">GET ALL GARNISHMENT CALCULATION RESULT</a>
         <a href="#GET 5 Recent Log Data">GET 5 RECENT LOG DATA</a>
         <a href="#Update Employer Details">UPDATE EMPLOYER DETAILS</a>
-        <a href="#Update Employee Details">UPDATE EMPLOYEE DETAILS</a>
+        <a href="#Update Employee Deatils">UPDATE EMPLOYEE DETAILS</a>
         <a href="#Update Tax Details">UPDATE TAX DETAILS</a>
         <a href="#Update Department Details">UPDATE DEPARTMENT DETAILS</a>
         <a href="#Update Location Details">UPDATE LOCATION DETAILS</a>
         <a href="#Delete Employee Details">DELETE EMPLOYEE DETAILS</a>
-        <a href="#Update Tax Details">DELETE TAX DETAILS</a>
-        <a href="#Update Department Details">DELETE DEPARTMENT DETAILS</a>
-        <a href="#Update Location Details">DELETE LOCATION DETAILS</a>
+        <a href="#Delete Tax Details">DELETE TAX DETAILS</a>
+        <a href="#Delete Department Details">DELETE DEPARTMENT DETAILS</a>
+        <a href="#Delete Location Details">DELETE LOCATION DETAILS</a>
 
     </div>
     <div class="content">
@@ -614,8 +619,8 @@
     </section>
 
 </section>
-<section id="Calculation Data">
-    <h2>Calculation Data</h2>
+<section id="Garnishment Calculation Data">
+    <h2>Garnishment Calculation Data</h2>
     <p>This is a <strong>POST API</strong> we used this API for storing the garnishment calculation data with the following fields:</p>
     <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/EmployeeImportView/int:employer_id/ </code></p>
     <h3>QUERY PARAMETERS</h3>
@@ -728,7 +733,146 @@
         </div>
     </div>
 </section>
+<section id="Single Student Loan Calculation Data">
+    <h2>Single Student Loan Calculation Data</h2>
+    <p>This is a <strong>POST API</strong> we used this API for storing the garnishment calculation data with the following fields:</p>
+    <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/StudentLoanCalculationData/</code></p>
+    <h3>QUERY PARAMETERS</h3>
+    <table class="query-params-table">
+            <thead>
+                <tr>
+                    <th>Key</th>    
+                    <th>Values</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>employer_id</td>
+                    <td>Employer_id  field for building the connection between location and employer.</td>
+                </tr>
+                <tr>
+                    <td>employee_id</td>
+                    <td>Employee id field for building the connection between employee and employer .</td>
+                </tr>  
+                <tr>
+                    <td>employee_name</td>
+                    <td>Employee Name field represents the name of the employee.</td>
+                </tr>
+                <tr>
+                    <td>earnings</td>
+                    <td>Earnings field for the garnishment calculation amount.</td>
+                </tr>         
+                <tr>
+                    <td>garnishment_fees</td>
+                    <td>Garnishment fees name field for the garnishment calculation amount.</td>
+                </tr>       
+                <tr>
+                    <td>minimum_wages</td>
+                    <td>Minimum Wages field for the garnishment calculation amount.</td>
+                </tr>       
+                <tr>
+                    <td>order_id</td>
+                    <td>Order id for gives the details about the order.</td>
+                </tr>  
+
+            </tbody>
+        </table>
+    <div class="flex-row">
+        <div class="code-block">
+            <h3>Example CURL Command</h3>
+            <pre>
+--request POST 'https://garnishment-backend.onrender.com/User/StudentLoanCalculationData/'
+--form 'employee_id=85'\
+--form 'employer_id = 11 '\
+--form 'earnings=620'\
+--form 'employee_name="John Doe"'\
+--form 'garnishment_fees=10'\
+--form 'minimum_wages=61'\\
+--form 'order_id =304'\
+            </pre>
+        </div>
+        <div class="response">
+            <h3>Response</h3>
+            <pre>
+{
+    "message": "Student Loan Calculation Details Registered Successfully",
+    "status code": 200
+}
+            </pre>
+        </div>
+    </div>
 </section>
+
+<section id="Multiple Student Loan Calculation Data">
+    <h2>Calculation Data</h2>
+    <p>This is a <strong>POST API</strong> we used this API for storing the garnishment calculation data with the following fields:</p>
+    <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/MiltipleStudentLoanCalculationData/</code></p>
+    <h3>QUERY PARAMETERS</h3>
+    <table class="query-params-table">
+            <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Values</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>employer_id</td>
+                    <td>Employer_id  field for building the connection between location and employer.</td>
+                </tr>
+                <tr>
+                    <td>employee_id</td>
+                    <td>Employee id field for building the connection between employee and employer .</td>
+                </tr>  
+                <tr>
+                    <td>employee_name</td>
+                    <td>Employee Name field represents the name of the employee.</td>
+                </tr>
+                <tr>
+                    <td>earnings</td>
+                    <td>Earnings field for the garnishment calculation amount.</td>
+                </tr>         
+                <tr>
+                    <td>garnishment_fees</td>
+                    <td>Garnishment fees name field for the garnishment calculation amount.</td>
+                </tr>       
+                <tr>
+                    <td>minimum_wages</td>
+                    <td>Minimum Wages field for the garnishment calculation amount.</td>
+                </tr>       
+                <tr>
+                    <td>order_id</td>
+                    <td>Order id for gives the details about the order.</td>
+                </tr>  
+
+            </tbody>
+        </table>
+    <div class="flex-row">
+        <div class="code-block">
+            <h3>Example CURL Command</h3>
+            <pre>
+--request POST 'https://garnishment-backend.onrender.com/User/MiltipleStudentLoanCalculationData/'
+--form 'employee_id=85'\
+--form 'employer_id = 11 '\
+--form 'earnings=620'\
+--form 'employee_name="John Doe"'\
+--form 'garnishment_fees=10'\
+--form 'minimum_wages=61'\\
+--form 'order_id =304'\
+            </pre>
+        </div>
+        <div class="response">
+            <h3>Response</h3>
+            <pre>
+{
+    "message": "Student Loan Calculation Details Registered Successfully",
+    "status code": 200
+}
+            </pre>
+        </div>
+    </div>
+</section>
+
         <section id="DashBoard Data">
             <h2>DashBoard Data</h2>
             <p>This is a <strong>GET API</strong> for get the dashboard data </p>
@@ -965,8 +1109,8 @@
                 </div>
             </div>
         </section>  
-        <section id="Get All Emplloyee Details">
-            <h2>Get All Emplloyee Details</h2>
+        <section id="Get All Employee Details">
+            <h2>Get All Employee Details</h2>
             <p>This is a <strong>GET API</strong> for get the Get all employee Details </p>
             <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/GetAllEmplloyeeDetail</code></p>
             <h3>QUERY PARAMETERS</h3>
@@ -1214,8 +1358,8 @@
                 </div>
             </div>
         </section>
-<section id="Get Department Details">
-            <h2>Get Department Details</h2>
+<section id="Get All Department Details">
+            <h2>Get All Department Details</h2>
             <p>This is a <strong>GET API</strong> for retrieving all Department data </p>
             <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/GetAllDepartmentDetail</code></p>
             <h3>QUERY PARAMETERS</h3>
@@ -1454,44 +1598,9 @@
         "number_of_garnishment": 3,
         "location": "Uttar Pradesh"
     },
-    {
-        "employee_id": 72,
-        "employer_id": 11,
-        "employee_name": "Jessica Miller",
-        "department": "Support",
-        "pay_cycle": "Monthly",
-        "number_of_garnishment": 3,
-        "location": "Rajasthan"
-    },
-    {
-        "employee_id": 73,
-        "employer_id": 11,
-        "employee_name": "David Taylor",
-        "department": "Development",
-        "pay_cycle": "Weekly",
-        "number_of_garnishment": 3,
-        "location": "Karnataka"
-    },
-    {
-        "employee_id": 74,
-        "employer_id": 11,
-        "employee_name": "Sarah Anderson",
-        "department": "Operations",
-        "pay_cycle": "Monthly",
-        "number_of_garnishment": 3,
-        "location": "Tamil Nadu"
-    },
-    {
-        "employee_id": 75,
-        "employer_id": 11,
-        "employee_name": "James Thomas",
-        "department": "Research",
-        "pay_cycle": "Weekly",
-        "number_of_garnishment": 3,
-        "location": "Bihar"
-    }
+]
 }
-                </pre>
+              </pre>
             </div>
         </div>
     </section>
@@ -1740,8 +1849,8 @@
             </div>
         </div>
     </section>
-    <section id="Garnishment Calculation Result">
-        <h2>Garnishment Calculation Result</h2>
+    <section id="Get Garnishment Calculation Result">
+        <h2>Get Garnishment Calculation Result</h2>
         <p>This is a <strong>GET API</strong> for retrieving the Garnishment Calculation Result by using the employer and employee id</p>
         <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/Gcalculations/int:employer_id/int:employee_id/</code></p>
         <h3>QUERY PARAMETERS</h3>
@@ -1766,10 +1875,6 @@
                         <td>Result field gives the total garnishment amount.</td>
                     </tr>
                     <tr>
-                        <td>department</td>
-                        <td>Department field gives details about department.</td>
-                    </tr> 
-                    <tr>
                         <td>timestamp</td>
                         <td>Timestamp field provides the date and time of the garnishment calculation</td>
                     </tr>
@@ -1779,6 +1884,120 @@
                 <h3>Example CURL Command</h3>
                 <pre>
 --request GET 'https://garnishment-backend.onrender.com/User/Gcalculations/int:employer_id/int:employee_id/' \
+
+                </pre>
+            </div>
+            <div class="response">
+                <h3>Response</h3>
+                <pre>   
+{
+    "success": true,
+    "message": "Data fetched successfully",
+    "status code": 200,
+    "data": {
+        "id": 49,
+        "employee_id": 80,
+        "employer_id": 11,
+        "result": 218.99,
+        "timestamp": "2024-07-22T03:59:56.085043Z"
+    }
+}
+                </pre>
+            </div>
+        </div>
+    </section>
+<section id="Get Single Student Loan Calculation Result">
+        <h2>Get Single Student Loan Calculation Result</h2>
+        <p>This is a <strong>GET API</strong> for retrieving the Garnishment Calculation Result by using the employer and employee id</p>
+        <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/StudentLoanCalculationData/</code></p>
+        <h3>QUERY PARAMETERS</h3>
+        <table class="query-params-table">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Values</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>employee_id</td>
+                        <td>Tax id field is uniquely identify the employee data.</td>
+                    </tr>
+                    <tr>
+                        <td>employer_id</td>
+                        <td>Employer id id field for building the connection between employee and employer </td>
+                    </tr>
+                    <tr>
+                        <td>result</td>
+                        <td>Result field gives the total garnishment amount.</td>
+                    </tr>
+                    <tr>
+                        <td>timestamp</td>
+                        <td>Timestamp field provides the date and time of the garnishment calculation</td>
+                    </tr>
+            </table>
+        <div class="flex-row">
+            <div class="code-block">
+                <h3>Example CURL Command</h3>
+                <pre>
+--request GET 'https://garnishment-backend.onrender.com/User/StudentLoanCalculationData/' \
+
+                </pre>
+            </div>
+            <div class="response">
+                <h3>Response</h3>
+                <pre>   
+{
+    "success": true,
+    "message": "Data fetched successfully",
+    "status code": 200,
+    "data": {
+        "id": 49,
+        "employee_id": 80,
+        "employer_id": 11,
+        "result": 218.99,
+        "timestamp": "2024-07-22T03:59:56.085043Z"
+    }
+}
+                </pre>
+            </div>
+        </div>
+    </section>
+<section id="Get Multiple Student Loan Calculation Result">
+        <h2>Get Multiple Student Loan Calculation Result</h2>
+        <p>This is a <strong>GET API</strong> for retrieving the Garnishment Calculation Result by using the employer and employee id</p>
+        <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/MiltipleStudentLoanCalculationData/</code></p>
+        <h3>QUERY PARAMETERS</h3>
+        <table class="query-params-table">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Values</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>employee_id</td>
+                        <td>Tax id field is uniquely identify the employee data.</td>
+                    </tr>
+                    <tr>
+                        <td>employer_id</td>
+                        <td>Employer id id field for building the connection between employee and employer </td>
+                    </tr>
+                    <tr>
+                        <td>result</td>
+                        <td>Result field gives the total garnishment amount.</td>
+                    </tr>
+                    <tr>
+                        <td>timestamp</td>
+                        <td>Timestamp field provides the date and time of the garnishment calculation</td>
+                    </tr>
+            </table>
+        <div class="flex-row">
+            <div class="code-block">
+                <h3>Example CURL Command</h3>
+                <pre>
+--request GET 'https://garnishment-backend.onrender.com/User/MiltipleStudentLoanCalculationData/' \
 
                 </pre>
             </div>
@@ -2289,8 +2508,8 @@
             </div>
         </div>
     </section>
-    <section id="Delete Employee Deatils">
-        <h2>Delete Employee Deatils</h2>
+    <section id="Delete Employee Details">
+        <h2>Delete Employee Details</h2>
         <p>This is a <strong>DELETE API</strong> for Deleting the employee details:</p>
         <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/EmployeeDelete/int:employer_id/int:employee_id/</code></p>
         <h3>QUERY PARAMETERS</h3>
