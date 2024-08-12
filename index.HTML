@@ -25,32 +25,28 @@
         <a href="#IWO Details">IWO DETAILS</a>
         <a href="#IWO PDF Upload">IWO PDF UPLOAD</a>
         <a href="#Import Employee Details">IMPORT EMPLOYEE DETAILS </a>
-        <a href="#Calculation Data">CALCULATION DATA </a>
         <a href="#DashBoard Data">DASHBORAD DATA</a>
         <a href="#Garnishment Calculation Data">GARNISHMENT CALCULATION DATA</a>
         <a href="#Single Student Loan Calculation Data">SINGLE STUDENT LOAN CALCULATION DATA</a>
         <a href="#Multiple Student Loan Calculation Data">MULTIPLE STUDENT LOAN CALCULATION DATA</a>
+        <a href="#Federal Tax Calculation Data">FEDERAL TAX CALCULATION DATA</a>
         <a href="#Get Location Details">GET LOCATION DETAILS</a>
         <a href="#Get Department Details">GET DEPARTMENT DETAILS</a>
         <a href="#Get Tax Details">GET TAX DETAILS</a>
         <a href="#Get All Employee Details">GET ALL EMPLOYEE DETAILS</a>
-<<<<<<< HEAD
-        <a href="#Get All Departments Details">GET ALL DEPARTMENTS DETAILS</a>
         <a href="#Get All Tax Details">GET ALL TAXS DETAILS</a>
-        <a href="#Get All locations Details">GET ALL LOCATIONS</a>
-=======
-        <a href="Get All Department Details">GET ALL DEPARTMENTS DETAILS</a>
+        <a href="#Get All Department Details">GET ALL DEPARTMENTS DETAILS</a>
         <a href="#Get All Tax Details">GET ALL TAX DETAILS</a>
-        <a href="#Get All location Details ">GET ALL LOCATIONS DETAILS</a>
->>>>>>> 3dc2d4a25b01e020669ed443fca3a394cb6ee7c2
-        <a href="#Get Single Employee">GET SINGLE EMPLOYEE</a>
-        <a href="#Get Single Department">GET SINGLE DEPARTMENT</a>
-        <a href="#Get Single Location">GET SINGLE LOCATION</a>
-        <a href="#Get Single Tax">GET SINGLE TAX</a>
+        <a href="#Get All Location Details">GET ALL LOCATIONS DETAILS</a>
+        <a href="#Get Single Employee Details">GET SINGLE EMPLOYEE DETAIL</a>
+        <a href="#Get Single Department Details">GET SINGLE DEPARTMENT DETAIL</a>
+        <a href="#Get Single Location Details">GET SINGLE LOCATION DETAIL</a>
+        <a href="#Get Single Tax Details">GET SINGLE TAX DETAIL</a>
         <a href="#Export Employee Data CSV File">EXPORT EMPLOYEE Data CSV FILE</a>
         <a href="#Get Garnishment Calculation Result">GET GARNISHMENT CALCULATION RESULT</a>
-        <a href="Get Single Student Loan Calculation Result" >GET SINGLE STUDENT LOAN CALCULATION RESULT</a>
-        <a href="Get Multiple Student Loan Calculation Result" >GET MULTIPLE STUDENT LOAN CALCULATION RESULT</a>
+        <a href="#Get Single Student Loan Calculation Result" >GET SINGLE STUDENT LOAN CALCULATION RESULT</a>
+        <a href="#Get Multiple Student Loan Calculation Result" >GET MULTIPLE STUDENT LOAN CALCULATION RESULT</a>
+        <a href="#Get Federal Tax Calculation Result" >GET FEDERAL TAX CALCULATION RESULT</a>
         <a href="#Get ALL Garnishment Calculation Result">GET ALL GARNISHMENT CALCULATION RESULT</a>
         <a href="#GET 5 Recent Log Data">GET 5 RECENT LOG DATA</a>
         <a href="#Update Employer Details">UPDATE EMPLOYER DETAILS</a>
@@ -878,7 +874,79 @@
         </div>
     </div>
 </section>
+<section id="Federal Tax Calculation Data">
+    <h2>Federal Tax Calculation Data</h2>
+    <p>This is a <strong>GET API</strong> we used this API for storing the Federal Tax calculation data with the following fields:</p>
+    <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/FederalCaseData</code></p>
+    <h3>QUERY PARAMETERS</h3>
+    <table class="query-params-table">
+            <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Values</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>employer_id</td>
+                    <td>'Employer id'  field for building the connection between location and employer.</td>
+                </tr>
+                <tr>
+                    <td>employee_id</td>
+                    <td>'Employee id' field for building the connection between employee and employer .</td>
+                </tr>  
+                <tr>
+                    <td>employee_name</td>
+                    <td>'Employee Name' field represents the name of the employee.</td>
+                </tr>
+                <tr>
+                    <td>earnings</td>
+                    <td>'Earnings' field is used to calculate the amount for Federal Tax</td>
+                </tr>             
+                <tr>
+                    <td>pay_period</td>
+                    <td>'Pay period' field is used to calculate the amount for Federal Tax.</td>
+                </tr>       
+                <tr>
+                    <td>no_of_exception</td>
+                    <td>'No of exception' field is used to calculate the amount for Federal Tax.</td>
+                </tr> 
+                <tr>
+                    <td>filing_status</td>
+                    <td>'Filing status' field is used to calculate the amount for Federal Tax.</td>
+                </tr>
+                <tr>
+                    <td>garnishment_fees</td>
+                    <td>'Garnishment fees' field is used to calculate the amount for Federal Tax.</td>
+                </tr>   
 
+            </tbody>
+        </table>
+    <div class="flex-row">
+        <div class="code-block">
+            <h3>Example CURL Command</h3>
+            <pre>
+--request POST 'https://garnishment-backend.onrender.com/User/FederalCaseData'
+--form 'employee_id=85\
+--form 'employer_id' = 11 \
+--form 'employee_name'="John Doe"'\
+--form 'earnings=620'\
+--form 'pay_period'='Biweekly'\
+--form 'no_of_exception'=3'\
+--form 'filing_status'= 'head of household',
+--form 'garnishment_fees'=10\
+            </pre>
+        </div>
+        <div class="response">
+            <h3>Response</h3>
+            <pre>
+{
+    "message": "Federal Tax Calculations Details Successfully Registered",
+    "status code": 200
+}           </pre>
+        </div>
+    </div>
+</section>
         <section id="DashBoard Data">
             <h2>DashBoard Data</h2>
             <p>This is a <strong>GET API</strong> for get the dashboard data </p>
@@ -1364,13 +1432,10 @@
                 </div>
             </div>
         </section>
-<<<<<<< HEAD
-<section id="Get All Departments Details">
-            <h2>Get Department Details</h2>
-=======
+
+
 <section id="Get All Department Details">
             <h2>Get All Department Details</h2>
->>>>>>> 3dc2d4a25b01e020669ed443fca3a394cb6ee7c2
             <p>This is a <strong>GET API</strong> for retrieving all Department data </p>
             <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/GetAllDepartmentDetail</code></p>
             <h3>QUERY PARAMETERS</h3>
@@ -1433,7 +1498,7 @@
                 </div>
             </div>
         </section>    
-        <section id="Get Employee Details By Employer_id">
+        <section id="Get Employee Details By Employer ID">
             <h2>Get Employee Details By Employer_id</h2>
             <p>This is a <strong>GET API</strong> for retrieving the employee data by using employer id</p>
             <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/getemployeedetails/int:employer_id</code></p>
@@ -2026,6 +2091,84 @@
         "result": 218.99,
         "timestamp": "2024-07-22T03:59:56.085043Z"
     }
+}
+                </pre>
+            </div>
+        </div>
+    </section>
+
+    <section id="Get Federal Tax Calculation Result">
+        <h2>Get Federal Tax Calculation Result</h2>
+        <p>This is a <strong>GET API</strong>  for retrieving the Federal Tax Result by using the employee id</p>
+        <p><strong>Endpoint:</strong> <code>https://garnishment-backend.onrender.com/User/FederalCaseResult/int:employer_id/</code></p>
+        <h3>QUERY PARAMETERS</h3>
+        <table class="query-params-table">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Values</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>employer_id</td>
+                        <td>'Employer id'  field for building the connection between location and employer.</td>
+                    </tr>
+                    <tr>
+                        <td>employee_id</td>
+                        <td>'Employee id' field for building the connection between employee and employer .</td>
+                    </tr>  
+                    <tr>
+                        <td>employee_name</td>
+                        <td>'Employee Name' field represents the name of the employee.</td>
+                    </tr>
+                    <tr>
+                        <td>earnings</td>
+                        <td>'Earnings' field is used to calculate the amount for Federal Tax</td>
+                    </tr>             
+                    <tr>
+                        <td>pay_period</td>
+                        <td>'Pay period' field is used to calculate the amount for Federal Tax.</td>
+                    </tr>       
+                    <tr>
+                        <td>no_of_exception</td>
+                        <td>'No of exception' field is used to calculate the amount for Federal Tax.</td>
+                    </tr> 
+                    <tr>
+                        <td>filing_status</td>
+                        <td>'Filing status' field is used to calculate the amount for Federal Tax.</td>
+                    </tr>
+                    <tr>
+                        <td>garnishment_fees</td>
+                        <td>'Garnishment fees' field is used to calculate the amount for Federal Tax.</td>
+                    </tr>   
+    
+                </tbody>
+            </table>
+        <div class="flex-row">
+            <div class="code-block">
+                <h3>Example CURL Command</h3>
+                <pre>
+    --request POST 'https://garnishment-backend.onrender.com/User/FederalCaseResult/int:employer_id/'
+                </pre>
+            </div>
+            <div class="response">
+                <h3>Response</h3>
+                <pre>
+{
+    "success": true,
+    "message": "Data retrieved successfully",
+    "status code": 200,
+    "data": [
+        {
+            "id": 13,
+            "employee_id": 1,
+            "employer_id": 1,
+            "net_pay": 773.08,
+            "result": 266.8,
+            "timestamp": "2024-08-10T11:57:55.440679Z"
+        }
+    ]
 }
                 </pre>
             </div>
